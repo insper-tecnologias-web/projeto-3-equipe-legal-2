@@ -1,0 +1,11 @@
+services:
+  postgresql:
+    image: bitnami/postgresql:latest
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRESQL_USER: postgres
+      POSTGRESQL_PASSWORD: S3cret123
+      POSTGRESQL_DB: postgres
+    volumes:
+      - ./data:/var/lib/postgresql/data
