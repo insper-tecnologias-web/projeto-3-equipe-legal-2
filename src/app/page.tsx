@@ -1,3 +1,4 @@
+import { createGame } from "@/actions/create-game";
 import Image from "next/image";
 
 export default function Home() {
@@ -48,6 +49,12 @@ export default function Home() {
             Read our docs
           </a>
         </div>
+
+        <form className="flex flex-col w-full p-2" action={createGame}>
+          <input className="text-black mb-3" type="text" name="name"/>
+          <button className="font-semibold" type="submit">Create Game</button>
+        </form>
+
       </main>
       <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
         <a
