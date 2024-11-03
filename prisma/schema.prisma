@@ -13,7 +13,28 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id   String @id @default(cuid())
-  name String
+enum GameStatus {
+  WAITING
+  PLAYING
+  FINISHED
+}
+
+model Player {
+  playerId String  @id @default(cuid())
+  name     String
+  isHost   Boolean
+
+  game   Game   @relation(fields: [gameId], references: [gameId])
+  gameId String
+
+  @@map("players")
+}
+
+model Game {
+  gameId String     @id @default(cuid())
+  status GameStatus
+
+  players Player[]
+
+  @@map("games")
 }
