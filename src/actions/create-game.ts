@@ -1,19 +1,22 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { redirect } from "next/dist/server/api-utils";
 
 export const createGame = async (formData: FormData) => {
   const content = formData.get("name");
 
-  await prisma.game.create({
-    data: {
-      status: "WAITING",
-      players: {
-        create: {
-          name: content as string,
-          isHost: true,
+  await prisma.game
+    .create({
+      data: {
+        status: "WAITING",
+        players: {
+          create: {
+            name: content as string,
+            isHost: true,
+          },
         },
       },
-    },
-  });
+    })
+    .then((game) => redirect(`/game/${game.gameId}`));
 };
