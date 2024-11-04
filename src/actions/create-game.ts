@@ -1,7 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
-import { redirect } from "next/dist/server/api-utils";
+import { redirect } from "next/navigation";
 
 export const createGame = async (formData: FormData) => {
   const content = formData.get("name");
