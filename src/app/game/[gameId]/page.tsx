@@ -1,4 +1,5 @@
 import BackArrow from "@/components/backarrow";
+import StartButton from "@/components/startButton";
 import { prisma } from "@/lib/prisma";
 import Image from "next/image";
 import { redirect } from "next/navigation";
@@ -40,6 +41,8 @@ export default async function GamePage({ params }: GamePageProps) {
         <div className="flex w-60 h-60 border-4 border-dashed border-zinc-700 rounded-md text-center justify-center items-center"></div>
         <div className="flex w-60 h-60 border-4 border-dashed border-zinc-700 rounded-md text-center justify-center items-center"></div>
       </div>
+
+      <StartButton gameId={gameId}/>
     </div>
   );
 }
