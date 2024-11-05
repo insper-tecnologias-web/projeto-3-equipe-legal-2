@@ -12,5 +12,13 @@ export function Player() {
 
   console.log(player);
 
-  return <>{isPlaying && <p>O Jogador está jogando!</p>}</>;
+  return (
+    <>
+      {isPlaying && <p>O Jogador está jogando!</p>}
+      <div>
+        <p>{player.name}</p>
+        <p>{player.isHost ? "Host" : "Guest"}</p>
+      </div>
+    </>
+  );
 }

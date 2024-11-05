@@ -38,6 +38,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const logout = () => {
     Cookies.remove("player_token");
+
+    window.location.href = "/";
   };
 
   useEffect(() => {

@@ -1,14 +1,16 @@
-import BackArrow from "@/components/backarrow";
+import BackArrow from "@/components/backArrow";
 import StartButton from "@/components/startButton";
 import { prisma } from "@/lib/prisma";
 import Image from "next/image";
 import { redirect } from "next/navigation";
+import { Player } from "./player";
 
 type GamePageProps = {
   params: Promise<{
     gameId: string;
   }>;
 };
+
 export default async function GamePage({ params }: GamePageProps) {
   const { gameId } = await params;
 
@@ -42,7 +44,8 @@ export default async function GamePage({ params }: GamePageProps) {
         <div className="flex w-60 h-60 border-4 border-dashed border-zinc-700 rounded-md text-center justify-center items-center"></div>
       </div>
 
-      <StartButton gameId={gameId}/>
+      <StartButton gameId={gameId} />
+      <Player />
     </div>
   );
 }
