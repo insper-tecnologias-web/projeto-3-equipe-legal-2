@@ -1,13 +1,7 @@
-'use client'; 
 import { createGame } from "@/actions/create-game"; 
 import Image from "next/image"; 
-import InviteButton from "@/components/inviteButton"; 
-import { useEffect, useState } from "react";
 
 export default function Home() {
-  const [url, setUrl] = useState('');
-  useEffect(() => {setUrl(window.location.href)}, [])
-
   return (
     <div className="flex flex-col w-full items-center h-[90vh] gap-8">
       <Image src="/logo.svg" alt="Logo" width={560} height={240} className="mt-10" />
@@ -57,7 +51,6 @@ export default function Home() {
           </div>
         </div>
       </main>
-      <InviteButton url={url}/>
     </div>
   );
 }
