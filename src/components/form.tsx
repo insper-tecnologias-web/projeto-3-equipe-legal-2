@@ -1,25 +1,19 @@
 "use client";
 
+import axios from "axios";
 import { useState } from "react";
 
 export function Form() {
   const [name, setName] = useState("");
 
-  const hanldeCreateGame = async (e: React.FormEvent) => {
+  const handleCreateGame = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      const response = await fetch("/api/games", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name }),
-      });
+      const response = await axios.post("/api/games", { name });
 
-      const data = await response.json();
-      console.log(data);
-      if (response.ok) {
+      const data = await response.data;
+      if (response) {
         window.location.href = `/game/${data.gameId}`;
       } else {
         console.error("Erro ao criar o jogo:", data.error);
@@ -30,7 +24,7 @@ export function Form() {
   };
 
   return (
-    <form className="flex flex-col h-full justify-center items-center p-2" onSubmit={hanldeCreateGame}>
+    <form className="flex flex-col h-full justify-center items-center p-2" onSubmit={handleCreateGame}>
       <label className="font-semibold text-center text-wrap text-3xl w-4/5 mb-4">
         Escreva um nickname e crie a sua sala
       </label>

@@ -1,13 +1,10 @@
+import { PlayerProps } from "@/types";
 import axios from "axios";
 
-const getUserById = async (playerId: string) => {
-  try {
-    const response = await axios.get(`/api/players/${playerId}`);
+const getUserById = async (playerId: string): Promise<PlayerProps | null> => {
+  const response = await axios.get<PlayerProps | null>(`/api/players/${playerId}`);
 
-    return response.data;
-  } catch (error) {
-    console.error(error);
-  }
+  return response.data;
 };
 
 export const userService = { getUserById };
