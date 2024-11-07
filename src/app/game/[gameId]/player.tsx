@@ -2,76 +2,33 @@
 
 import { InviteButton } from "@/components/inviteButton";
 import StartButton from "@/components/startButton";
-import { database } from "@/lib/firebase";
-import { PlayerProps } from "@/types";
-import { get, onValue, ref, update } from "firebase/database";
-import Cookies from "js-cookie";
-import { useCallback, useEffect, useState } from "react";
-import { v4 as uuid } from "uuid";
+import { AuthContext } from "@/contexts/AuthContext";
+import { gameService } from "@/services/game";
+import { useContext, useState } from "react";
 
 export function Player({ gameId }: { gameId: string }) {
-  const [players, setPlayers] = useState(
-    {} as Record<
-      string,
-      {
-        name: string;
-        isHost: boolean;
-      }
-    >
-  );
-  const [player, setPlayer] = useState<PlayerProps | null>(null);
+  const { players, fetchPlayer, player } = useContext(AuthContext);
   const [name, setName] = useState("");
 
-  const fetchPlayer = useCallback(async () => {
-    const playerToken = Cookies.get("player_token");
-    const playerRef = ref(database, `games/${gameId}/players/${playerToken}`);
-
-    const snapshot = await get(playerRef);
-
-    if (snapshot.exists()) {
-      console.log(snapshot.val());
-      setPlayer(snapshot.val());
-    }
-  }, [gameId]);
-
   const handleJoinGame = async () => {
-    const playerId = uuid();
-    const playerRef = ref(database, `games/${gameId}/players/${playerId}`);
-
-    const playerData = {
-      name,
-      isHost: false,
-    };
-
-    await update(playerRef, playerData);
-
-    Cookies.set("player_token", playerId);
+    await gameService.addPlayer(gameId, name);
 
     setName("");
     fetchPlayer();
   };
 
-  useEffect(() => {
-    const playersRef = ref(database, `games/${gameId}/players`);
-
-    onValue(playersRef, (snapshot) => {
-      const data = snapshot.val();
-      setPlayers(data || {});
-    });
-
-    fetchPlayer();
-  }, [gameId, fetchPlayer]);
-
-  if (!Object.keys(players).length) return;
+  if (!players || !Object.keys(players).length) return;
 
   return (
     <>
       <div className="text-xl flex gap-5">
-        {Object.keys(players).map((playerId) => (
-          <div key={playerId} className="w-60 h-60 flex items-center justify-center border-4 border-zinc-900">
-            <p>{players[playerId].name}</p>
-          </div>
-        ))}
+        {Object.keys(players)
+          .reverse()
+          .map((playerId) => (
+            <div key={playerId} className="w-60 h-60 flex items-center justify-center border-4 border-zinc-900">
+              <p>{players[playerId].name}</p>
+            </div>
+          ))}
         {Array.from({ length: 4 - Object.keys(players).length }).map((_, idx) => (
           <div
             key={idx}

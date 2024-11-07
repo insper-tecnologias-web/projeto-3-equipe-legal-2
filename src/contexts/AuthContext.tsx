@@ -1,15 +1,21 @@
 "use client";
 
-import { userService } from "@/services/user";
+import { playerService } from "@/services/player";
 import { PlayerProps } from "@/types";
-import Cookies from "js-cookie";
-import { createContext, ReactNode, useCallback, useMemo, useState } from "react";
+import { onValue } from "firebase/database";
+import { useParams } from "next/navigation";
+import { createContext, ReactNode, useCallback, useEffect, useMemo, useState } from "react";
 
 interface AuthContextData {
-  player?: PlayerProps;
-  isPlaying: boolean;
-  isLoading: boolean;
-  logout: () => void;
+  player: PlayerProps | null;
+  players: Record<
+    string,
+    {
+      name: string;
+      isHost: boolean;
+    }
+  > | null;
+  fetchPlayer: () => void;
 }
 
 interface AuthProviderProps {
@@ -19,50 +25,34 @@ interface AuthProviderProps {
 export const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [player, setPlayer] = useState<PlayerProps | undefined>();
+  const [players, setPlayers] = useState<AuthContextData["players"] | null>(null);
+  const [player, setPlayer] = useState<PlayerProps | null>(null);
+  const { gameId } = useParams();
 
-  const fetchPlayer = useCallback(async (playerId: string) => {
-    setIsLoading(true);
+  const fetchPlayer = useCallback(async () => {
+    const { player } = await playerService.getPlayerById(gameId as string);
 
-    try {
-      const player = await userService.getUserById(playerId);
+    setPlayer(player);
+  }, [gameId]);
 
-      if (player) {
-        setPlayer(player);
-      }
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
+  useEffect(() => {
+    const { playersRef } = playerService.getAllPlayers(gameId as string);
 
-  const logout = () => {
-    Cookies.remove("player_token");
+    onValue(playersRef, (snapshot) => {
+      const data = snapshot.val();
+      setPlayers(data || {});
+    });
 
-    window.location.href = "/";
-  };
-
-  // useEffect(() => {
-  //   const playerToken = Cookies.get("player_token");
-
-  //   if (playerToken) {
-  //     setIsPlaying(true);
-
-  //     fetchPlayer(playerToken);
-  //   }
-  // }, [fetchPlayer]);
+    fetchPlayer();
+  }, [gameId, fetchPlayer]);
 
   const contextValue = useMemo(
     () => ({
-      isPlaying,
       player,
-      isLoading,
-      logout,
+      players,
+      fetchPlayer,
     }),
-    [isPlaying, player, isLoading]
+    [player, players, fetchPlayer]
   );
 
   return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>;

@@ -1,6 +1,6 @@
 "use client";
 
-import axios from "axios";
+import { gameService } from "@/services/game";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -12,16 +12,11 @@ export function Form() {
     e.preventDefault();
 
     try {
-      const response = await axios.post("/api/games", { name });
+      const { gameId } = await gameService.createGame(name);
 
-      const data = await response.data;
-      if (response) {
-        router.push(`/game/${data.gameId}`);
-      } else {
-        console.error("Erro ao criar o jogo:", data.error);
-      }
+      router.push(`game/${gameId}`);
     } catch (error) {
-      console.error("Erro na requisição:", error);
+      console.error(error);
     }
   };
 
