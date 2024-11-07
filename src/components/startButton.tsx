@@ -9,7 +9,7 @@ type StartButtonProps = {
 
 export default function StartButton({ gameId, ...props }: StartButtonProps) {
   const handleStartGame = async () => {
-    await axios.put(`/api/games/${gameId}`, {
+    await axios.patch(`/api/games/${gameId}`, {
       gameId: gameId,
       status: "PLAYING",
     });

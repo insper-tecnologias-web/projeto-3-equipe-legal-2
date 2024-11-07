@@ -1,10 +1,12 @@
 "use client";
 
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export function Form() {
   const [name, setName] = useState("");
+  const router = useRouter();
 
   const handleCreateGame = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -14,7 +16,7 @@ export function Form() {
 
       const data = await response.data;
       if (response) {
-        window.location.href = `/game/${data.gameId}`;
+        router.push(`/game/${data.gameId}`);
       } else {
         console.error("Erro ao criar o jogo:", data.error);
       }

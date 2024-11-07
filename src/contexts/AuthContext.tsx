@@ -3,7 +3,7 @@
 import { userService } from "@/services/user";
 import { PlayerProps } from "@/types";
 import Cookies from "js-cookie";
-import { createContext, ReactNode, useCallback, useEffect, useMemo, useState } from "react";
+import { createContext, ReactNode, useCallback, useMemo, useState } from "react";
 
 interface AuthContextData {
   player?: PlayerProps;
@@ -45,15 +45,15 @@ export function AuthProvider({ children }: AuthProviderProps) {
     window.location.href = "/";
   };
 
-  useEffect(() => {
-    const playerToken = Cookies.get("player_token");
+  // useEffect(() => {
+  //   const playerToken = Cookies.get("player_token");
 
-    if (playerToken) {
-      setIsPlaying(true);
+  //   if (playerToken) {
+  //     setIsPlaying(true);
 
-      fetchPlayer(playerToken);
-    }
-  }, [fetchPlayer]);
+  //     fetchPlayer(playerToken);
+  //   }
+  // }, [fetchPlayer]);
 
   const contextValue = useMemo(
     () => ({
