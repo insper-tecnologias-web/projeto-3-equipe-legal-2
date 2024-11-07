@@ -1,17 +1,14 @@
 {
-  "name": "quadrinhos",
+  "name": "tirinhas",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "migrate": "npx prisma migrate dev",
-    "studio": "npx prisma studio"
+    "lint": "next lint"
   },
   "dependencies": {
-    "@prisma/client": "^5.21.1",
     "axios": "^1.7.7",
     "firebase": "^11.0.1",
     "js-cookie": "^3.0.5",
@@ -28,7 +25,6 @@
     "eslint": "^8.57.1",
     "eslint-config-next": "15.0.2",
     "postcss": "^8",
-    "prisma": "^5.21.1",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }
