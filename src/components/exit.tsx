@@ -1,27 +1,19 @@
 "use client";
 
-import { database } from "@/lib/firebase";
-import { ref, set } from "firebase/database";
-import Cookies from "js-cookie";
+import { playerService } from "@/services/player";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-interface BackArrowProps {
-  gameId: string;
-}
-
-export default function BackArrow({ gameId }: BackArrowProps) {
+export default function Exit({ gameId }: { gameId: string }) {
   const [imageSrc, setImageSrc] = useState("/back1.svg");
   const [imageWidth, setImageWidth] = useState(60);
   const router = useRouter();
 
-  const handleLogout = async () => {
-    const playerId = Cookies.get("player_token");
-    if (playerId) {
-      set(ref(database, `games/${gameId}/players/${playerId}`), null);
-      router.push("/");
-    }
+  const handleExit = () => {
+    playerService.logoutPlayer(gameId);
+
+    router.push("/");
   };
 
   const handleMouseEnter = () => {
@@ -35,7 +27,7 @@ export default function BackArrow({ gameId }: BackArrowProps) {
   };
 
   return (
-    <button onClick={handleLogout}>
+    <button onClick={handleExit}>
       <Image
         src={imageSrc}
         alt="Back arrow"
