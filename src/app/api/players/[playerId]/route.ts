@@ -9,10 +9,20 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       where: {
         playerId,
       },
+      select: {
+        playerId: true,
+        name: true,
+        isHost: true,
+        game: {
+          select: {
+            gameId: true,
+          },
+        },
+      },
     });
 
     if (!player) {
-      return NextResponse.json({ error: "Jogador não encontrado" }, { status: 404 });
+      return NextResponse.json(null, { status: 404 });
     }
 
     return NextResponse.json(player);

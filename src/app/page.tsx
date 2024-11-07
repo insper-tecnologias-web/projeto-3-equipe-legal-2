@@ -16,7 +16,7 @@ export default function Home() {
               height={300}
               className="absolute -z-10 bottom-[72px] left-8"
             />
-            <Image src={"/rick3.gif"} alt="Rick" width={70} height={300} className="absolute -z-10 -bottom-1" />
+            <Image src={"/rick3.gif"} alt="Rick" width={70} height={150} className="absolute -z-10 -bottom-1" />
             <Form />
           </div>
         </div>

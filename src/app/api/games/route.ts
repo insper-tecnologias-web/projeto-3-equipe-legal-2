@@ -1,6 +1,8 @@
-import { prisma } from "@/lib/prisma";
+import { database } from "@/lib/firebase";
+import { push, ref, set } from "firebase/database";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
+import { v4 as uuid } from "uuid";
 
 export async function POST(request: Request) {
   try {
@@ -11,32 +13,22 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "O campo 'name' é obrigatório." }, { status: 400 });
     }
 
-    const game = await prisma.game.create({
-      data: {
+    const gameRef = push(ref(database, "games"));
+
+    if (gameRef.key) {
+      const hostId = uuid();
+      const newGame = {
         status: "WAITING",
         players: {
-          create: {
-            name: name as string,
-            isHost: true,
-          },
+          [hostId]: { name: name, isHost: true },
         },
-      },
-      select: {
-        gameId: true,
-        players: {
-          select: {
-            playerId: true,
-          },
-          where: {
-            isHost: true,
-          },
-        },
-      },
-    });
+      };
 
-    (await cookies()).set("player_token", game.players[0].playerId);
+      await set(gameRef, newGame);
+      (await cookies()).set("player_token", hostId);
+    }
 
-    return NextResponse.json({ gameId: game.gameId });
+    return NextResponse.json({ gameId: gameRef.key });
   } catch (error) {
     console.error(error);
     return NextResponse.json({ error: "Ocorreu um erro ao criar o jogo." }, { status: 500 });

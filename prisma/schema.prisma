@@ -24,7 +24,7 @@ model Player {
   name     String
   isHost   Boolean
 
-  game   Game   @relation(fields: [gameId], references: [gameId])
+  game   Game   @relation(fields: [gameId], references: [gameId], onDelete: Cascade)
   gameId String
 
   @@map("players")
