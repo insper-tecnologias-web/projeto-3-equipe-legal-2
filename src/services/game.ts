@@ -75,7 +75,7 @@ const startGame = async (gameId: string) => {
     throw new Error("Erro ao inicializar o jogo");
   }
 
-  await update(gameRef, {'.value': "PLAYING"})
+  await update(gameRef, {'value': "PLAYING"})
 }
 
 export const gameService = { getGameById, getPlayers, addPlayer, createGame, startGame };

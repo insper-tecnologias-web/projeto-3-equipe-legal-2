@@ -39,12 +39,8 @@ const logoutPlayer = (gameId: string): void => {
 };
 
 const redirectPlayers = (gameId: string) => {
-  const { playersRef } = getAllPlayers(gameId)
-  
-  onValue(playersRef, (snapshot) => {
-    const data = snapshot.val();
-    redirect(`game/${gameId}/comic/[playerId]`);
-  });
+  const id = Cookies.get('player_token');
+  redirect(`${gameId}/comic/${id}`)
 }
 
 export const playerService = { getPlayerById, logoutPlayer, getAllPlayers, redirectPlayers };
