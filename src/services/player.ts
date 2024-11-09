@@ -1,6 +1,9 @@
 import { database } from "@/lib/firebase";
 import { DatabaseReference, get, ref, set } from "firebase/database";
+import { onValue } from "firebase/database";
 import Cookies from "js-cookie";
+import { redirect } from 'next/navigation'
+import path from "path";
 
 const getPlayerById = async (gameId: string): Promise<{ player: any }> => {
   try {
@@ -35,4 +38,13 @@ const logoutPlayer = (gameId: string): void => {
   }
 };
 
-export const playerService = { getPlayerById, logoutPlayer, getAllPlayers };
+const redirectPlayers = (gameId: string) => {
+  const { playersRef } = getAllPlayers(gameId)
+  
+  onValue(playersRef, (snapshot) => {
+    const data = snapshot.val();
+    redirect(`game/${gameId}/comic/[playerId]`);
+  });
+}
+
+export const playerService = { getPlayerById, logoutPlayer, getAllPlayers, redirectPlayers };

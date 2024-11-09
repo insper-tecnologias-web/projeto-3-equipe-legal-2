@@ -68,4 +68,14 @@ const createGame = async (name: string): Promise<{ gameId: string }> => {
   return { gameId: gameRef.key };
 };
 
-export const gameService = { getGameById, getPlayers, addPlayer, createGame };
+const startGame = async (gameId: string) => {
+  const gameRef = ref(database, `games/${gameId}/status`);
+  
+  if (!gameRef.key) {
+    throw new Error("Erro ao inicializar o jogo");
+  }
+
+  await update(gameRef, {'.value': "PLAYING"})
+}
+
+export const gameService = { getGameById, getPlayers, addPlayer, createGame, startGame };
