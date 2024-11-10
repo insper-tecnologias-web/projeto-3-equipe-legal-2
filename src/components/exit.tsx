@@ -1,28 +1,28 @@
-"use client";
+'use client';
 
-import { playerService } from "@/services/player";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { playerService } from '@/services/player';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 export default function Exit({ gameId }: { gameId: string }) {
-  const [imageSrc, setImageSrc] = useState("/back1.svg");
+  const [imageSrc, setImageSrc] = useState('/back1.svg');
   const [imageWidth, setImageWidth] = useState(60);
   const router = useRouter();
 
   const handleExit = () => {
     playerService.logoutPlayer(gameId);
 
-    router.push("/");
+    router.push('/');
   };
 
   const handleMouseEnter = () => {
-    setImageSrc("/back2.svg");
+    setImageSrc('/back2.svg');
     setImageWidth(70);
   };
 
   const handleMouseLeave = () => {
-    setImageSrc("/back1.svg");
+    setImageSrc('/back1.svg');
     setImageWidth(60);
   };
 

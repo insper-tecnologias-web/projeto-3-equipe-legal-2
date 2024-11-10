@@ -5,14 +5,14 @@ import Cookies from "js-cookie";
 
 const getPlayerById = async (gameId: string): Promise<{ player: PlayerProps }> => {
   try {
-    const playerToken = Cookies.get("player_token");
+    const playerToken = Cookies.get('player_token');
     const playerRef = ref(database, `games/${gameId}/players/${playerToken}`);
     const snapShot = get(playerRef);
     const player = (await snapShot).val();
 
     return { player };
   } catch {
-    throw new Error("Erro ao buscar jogador");
+    throw new Error('Erro ao buscar jogador');
   }
 };
 
@@ -22,17 +22,17 @@ const getAllPlayers = (gameId: string): { playersRef: DatabaseReference } => {
 
     return { playersRef };
   } catch {
-    throw new Error("Erro ao buscar jogadores");
+    throw new Error('Erro ao buscar jogadores');
   }
 };
 
 const logoutPlayer = (gameId: string): void => {
   try {
-    const playerToken = Cookies.get("player_token");
+    const playerToken = Cookies.get('player_token');
 
     set(ref(database, `games/${gameId}/players/${playerToken}`), null);
   } catch {
-    throw new Error("Erro ao excluir");
+    throw new Error('Erro ao excluir');
   }
 };
 
