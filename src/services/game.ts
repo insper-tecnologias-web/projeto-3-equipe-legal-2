@@ -72,4 +72,10 @@ const createGame = async (name: string): Promise<{ gameId: string }> => {
   return { gameId: gameRef.key };
 };
 
-export const gameService = { getGameById, getPlayers, addPlayer, createGame };
+const startGame = async (gameId: string) => {
+  const gameRef = ref(database, `games/${gameId}`);
+
+  await update(gameRef, { status: "PLAYING" });
+};
+
+export const gameService = { getGameById, getPlayers, addPlayer, createGame, startGame };
