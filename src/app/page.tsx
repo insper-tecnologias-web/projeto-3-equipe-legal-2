@@ -1,5 +1,6 @@
-import { Form } from '@/components/form';
-import Image from 'next/image';
+import { Form } from "@/components/form";
+import Image from "next/image";
+import { Canvas } from "@/components/canvas";
 
 export default function Home() {
   return (
@@ -59,6 +60,7 @@ export default function Home() {
           </div>
         </div>
       </main>
+      <Canvas w={200} h={200}/>
     </div>
   );
 }
