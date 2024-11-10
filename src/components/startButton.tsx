@@ -1,6 +1,6 @@
 'use client';
 
-import { gameService } from "@/services/game";
+import { gameService } from '@/services/game';
 
 type StartButtonProps = {
   gameId: string;
