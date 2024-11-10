@@ -1,30 +1,34 @@
-import { database } from "@/lib/firebase";
-import { DataSnapshot, get, push, ref, set, update } from "firebase/database";
-import Cookies from "js-cookie";
-import { v4 as uuid } from "uuid";
+import { database } from '@/lib/firebase';
+import { DataSnapshot, get, push, ref, set, update } from 'firebase/database';
+import Cookies from 'js-cookie';
+import { v4 as uuid } from 'uuid';
 
-const getGameById = async (gameId: string): Promise<{ snapShot: DataSnapshot }> => {
+const getGameById = async (
+  gameId: string,
+): Promise<{ snapShot: DataSnapshot }> => {
   try {
     const gameRef = ref(database, `games/${gameId}`);
     const snapShot = await get(gameRef);
 
     if (!snapShot.exists()) {
-      throw new Error("O jogador não existe");
+      throw new Error('O jogador não existe');
     }
 
     return { snapShot };
   } catch {
-    throw new Error("Erro ao buscar o jogo");
+    throw new Error('Erro ao buscar o jogo');
   }
 };
 
-const getPlayers = async (gameId: string): Promise<{ snapShot: DataSnapshot }> => {
+const getPlayers = async (
+  gameId: string,
+): Promise<{ snapShot: DataSnapshot }> => {
   try {
     const playersRef = ref(database, `games/${gameId}/players`);
     const snapShot = await get(playersRef);
 
     if (!snapShot.exists()) {
-      throw new Error("O jogo não tem jogadores");
+      throw new Error('O jogo não tem jogadores');
     }
 
     return { snapShot };
@@ -44,26 +48,26 @@ const addPlayer = async (gameId: string, name: string): Promise<void> => {
 
   await update(playerRef, playerData);
 
-  Cookies.set("player_token", playerId);
+  Cookies.set('player_token', playerId);
 };
 
 const createGame = async (name: string): Promise<{ gameId: string }> => {
-  const gameRef = push(ref(database, "games"));
+  const gameRef = push(ref(database, 'games'));
 
   if (!gameRef.key) {
-    throw new Error("Erro ao criar o jogo");
+    throw new Error('Erro ao criar o jogo');
   }
 
   const hostId = uuid();
   const newGame = {
-    status: "WAITING",
+    status: 'WAITING',
     players: {
       [hostId]: { name: name, isHost: true },
     },
   };
 
   await set(gameRef, newGame);
-  Cookies.set("player_token", hostId);
+  Cookies.set('player_token', hostId);
 
   return { gameId: gameRef.key };
 };

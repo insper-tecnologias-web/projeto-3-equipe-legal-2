@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import axios from "axios";
-import { redirect } from "next/navigation";
+import axios from 'axios';
+import { redirect } from 'next/navigation';
 
 type StartButtonProps = {
   gameId: string;
@@ -11,7 +11,7 @@ export default function StartButton({ gameId, ...props }: StartButtonProps) {
   const handleStartGame = async () => {
     await axios.patch(`/api/games/${gameId}`, {
       gameId: gameId,
-      status: "PLAYING",
+      status: 'PLAYING',
     });
 
     redirect(`/game/${gameId}/draw?1`);

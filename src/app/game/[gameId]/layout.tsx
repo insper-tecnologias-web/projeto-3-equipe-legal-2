@@ -1,4 +1,4 @@
-import { AuthProvider } from "@/contexts/AuthContext";
+import { AuthProvider } from '@/contexts/AuthContext';
 
 export default function Layout({
   children,

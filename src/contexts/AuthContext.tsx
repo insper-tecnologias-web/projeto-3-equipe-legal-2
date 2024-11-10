@@ -1,10 +1,17 @@
-"use client";
+'use client';
 
-import { playerService } from "@/services/player";
-import { PlayerProps } from "@/types";
-import { onValue } from "firebase/database";
-import { useParams } from "next/navigation";
-import { createContext, ReactNode, useCallback, useEffect, useMemo, useState } from "react";
+import { playerService } from '@/services/player';
+import { PlayerProps } from '@/types';
+import { onValue } from 'firebase/database';
+import { useParams } from 'next/navigation';
+import {
+  createContext,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 
 interface AuthContextData {
   player: PlayerProps | null;
@@ -22,10 +29,14 @@ interface AuthProviderProps {
   children: ReactNode;
 }
 
-export const AuthContext = createContext<AuthContextData>({} as AuthContextData);
+export const AuthContext = createContext<AuthContextData>(
+  {} as AuthContextData,
+);
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [players, setPlayers] = useState<AuthContextData["players"] | null>(null);
+  const [players, setPlayers] = useState<AuthContextData['players'] | null>(
+    null,
+  );
   const [player, setPlayer] = useState<PlayerProps | null>(null);
   const { gameId } = useParams();
 
@@ -52,8 +63,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
       players,
       fetchPlayer,
     }),
-    [player, players, fetchPlayer]
+    [player, players, fetchPlayer],
   );
 
-  return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
+  );
 }
