@@ -30,7 +30,18 @@ export function Canvas ({w, h}: { w: number; h: number }) {
     ctx.fill()
   }
 
+  function saveImage () {
+    const canvas = canvasRef.current
+    if (!canvas) return
+
+    const image = canvas.toDataURL()
+    console.log(image)
+  }
+
   return (
-    <canvas onMouseDown={onMouseDown} ref={canvasRef} width={w} height={h} className="border-4 border-zinc-900"/>
+    <div>
+      <canvas onMouseDown={onMouseDown} ref={canvasRef} width={w} height={h} className="border-4 border-zinc-900"/>
+      <button className="border-4 border-zinc-900" onClick={saveImage}>Salvar</button>
+    </div>
   )
 }
