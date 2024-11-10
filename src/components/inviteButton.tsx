@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { useState } from "react";
+import { useState } from 'react';
 
 export function InviteButton() {
   const [copiado, setCopiado] = useState(false);
@@ -13,7 +13,7 @@ export function InviteButton() {
         setTimeout(() => setCopiado(false), 2000); // Reseta após 2 segundos
       })
       .catch((err) => {
-        console.error("Falha ao copiar a URL: ", err);
+        console.error('Falha ao copiar a URL: ', err);
       });
   };
 
@@ -22,7 +22,7 @@ export function InviteButton() {
       className="font-semibold text-xl hover:underline p-2 mt-8 border-4 border-zinc-900"
       onClick={handleCopiarURL}
     >
-      {copiado ? "Link copiado" : "Convidar"}
+      {copiado ? 'Link copiado' : 'Convidar'}
     </button>
   );
 }

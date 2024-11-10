@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { gameService } from "@/services/game";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { gameService } from '@/services/game';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 export function Form() {
-  const [name, setName] = useState("");
+  const [name, setName] = useState('');
   const router = useRouter();
 
   const handleCreateGame = async (e: React.FormEvent) => {
@@ -21,7 +21,10 @@ export function Form() {
   };
 
   return (
-    <form className="flex flex-col h-full justify-center items-center p-2" onSubmit={handleCreateGame}>
+    <form
+      className="flex flex-col h-full justify-center items-center p-2"
+      onSubmit={handleCreateGame}
+    >
       <label className="font-semibold text-center text-wrap text-3xl w-4/5 mb-4">
         Escreva um nickname e crie a sua sala
       </label>

@@ -5,19 +5,31 @@ import { Canvas } from "@/components/canvas";
 export default function Home() {
   return (
     <div className="flex flex-col w-full items-center h-[90vh] gap-8">
-      <Image src="/logo.svg" alt="Logo" width={560} height={240} className="mt-10" />
+      <Image
+        src="/logo.svg"
+        alt="Logo"
+        width={560}
+        height={240}
+        className="mt-10"
+      />
       <main className="flex gap-[10px]">
         <div className="flex flex-col items-center gap-4">
           <h1 className="text-2xl font-semibold">Crie o seu jogo</h1>
           <div className="w-[450px] h-[450px] border-4 border-zinc-900 relative">
             <Image
-              src={"/rick.svg"}
+              src={'/rick.svg'}
               alt="Rick"
               width={400}
               height={300}
               className="absolute -z-10 bottom-[72px] left-8"
             />
-            <Image src={"/rick3.gif"} alt="Rick" width={70} height={150} className="absolute -z-10 -bottom-1" />
+            <Image
+              src={'/rick3.gif'}
+              alt="Rick"
+              width={70}
+              height={150}
+              className="absolute -z-10 -bottom-1"
+            />
             <Form />
           </div>
         </div>
@@ -25,7 +37,7 @@ export default function Home() {
           <h1 className="text-2xl font-semibold">Como jogar</h1>
           <div className="flex flex-wrap w-[450px] gap-[10px] text-center text-xl relative">
             <Image
-              src={"/rick2.gif"}
+              src={'/rick2.gif'}
               alt="Rick"
               width={43}
               height={100}
@@ -38,10 +50,12 @@ export default function Home() {
               Quando estiver pronto, é só começar o jogo
             </div>
             <div className="w-[220px] h-[220px] border-4 border-zinc-900 flex items-center justify-center p-4">
-              Na primeira rodada, escolha o nome da sua tirinha e comece o desenho do primeiro quadrinho
+              Na primeira rodada, escolha o nome da sua tirinha e comece o
+              desenho do primeiro quadrinho
             </div>
             <div className="w-[220px] h-[220px] border-4 border-zinc-900 flex items-center justify-center p-4">
-              Na rodada seguinte, outra pessoa vai colocar os balões de fala no seu quadrinho e assim por diante :D
+              Na rodada seguinte, outra pessoa vai colocar os balões de fala no
+              seu quadrinho e assim por diante :D
             </div>
           </div>
         </div>

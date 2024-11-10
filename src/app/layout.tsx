@@ -1,12 +1,12 @@
-import type { Metadata } from "next";
-import { Coming_Soon } from "next/font/google";
-import "./globals.css";
+import type { Metadata } from 'next';
+import { Coming_Soon } from 'next/font/google';
+import './globals.css';
 
-const comingSoon = Coming_Soon({ weight: "400", subsets: ["latin"] });
+const comingSoon = Coming_Soon({ weight: '400', subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: "Tirinhas",
-  description: "Um jogo muito legal de fazer tirinhas",
+  title: 'Tirinhas',
+  description: 'Um jogo muito legal de fazer tirinhas',
 };
 
 export default function RootLayout({
@@ -16,7 +16,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${comingSoon.className} antialiased light`}>{children}</body>
+      <body className={`${comingSoon.className} antialiased light`}>
+        {children}
+      </body>
     </html>
   );
 }

@@ -1,19 +1,21 @@
-"use client";
+'use client';
 
 import { InviteButton } from "@/components/inviteButton";
 import StartButton from "@/components/startButton";
 import { AuthContext } from "@/contexts/AuthContext";
+import useGameStatusListener from "@/hooks/useGameStatusListener";
 import { gameService } from "@/services/game";
 import { useContext, useState } from "react";
 
 export function Player({ gameId }: { gameId: string }) {
   const { players, fetchPlayer, player } = useContext(AuthContext);
   const [name, setName] = useState("");
+  useGameStatusListener(gameId);
 
   const handleJoinGame = async () => {
     await gameService.addPlayer(gameId, name);
 
-    setName("");
+    setName('');
     fetchPlayer();
   };
 
@@ -25,22 +27,32 @@ export function Player({ gameId }: { gameId: string }) {
         {Object.keys(players)
           .reverse()
           .map((playerId) => (
-            <div key={playerId} className="w-60 h-60 flex items-center justify-center border-4 border-zinc-900">
+            <div
+              key={playerId}
+              className="w-60 h-60 flex items-center justify-center border-4 border-zinc-900"
+            >
               <p>{players[playerId].name}</p>
             </div>
           ))}
-        {Array.from({ length: 4 - Object.keys(players).length }).map((_, idx) => (
-          <div
-            key={idx}
-            className="flex w-60 h-60 border-4 px-4 border-dashed border-zinc-700 rounded-md text-center justify-center items-center"
-          >
-            <p>Esperando jogador</p>
-          </div>
-        ))}
+        {Array.from({ length: 4 - Object.keys(players).length }).map(
+          (_, idx) => (
+            <div
+              key={idx}
+              className="flex w-60 h-60 border-4 px-4 border-dashed border-zinc-700 rounded-md text-center justify-center items-center"
+            >
+              <p>Esperando jogador</p>
+            </div>
+          ),
+        )}
       </div>
       {player ? (
         <div className="flex gap-5">
-          {player.isHost && <StartButton gameId={gameId} disabled={Object.keys(players).length === 1} />}
+          {player.isHost && (
+            <StartButton
+              gameId={gameId}
+              disabled={Object.keys(players).length === 1}
+            />
+          )}
           <InviteButton />
         </div>
       ) : (
@@ -54,7 +66,10 @@ export function Player({ gameId }: { gameId: string }) {
             onChange={(e) => setName(e.target.value)}
             required
           />
-          <button className="font-semibold text-xl hover:underline" onClick={handleJoinGame}>
+          <button
+            className="font-semibold text-xl hover:underline"
+            onClick={handleJoinGame}
+          >
             Entrar
           </button>
         </div>
