@@ -1,9 +1,6 @@
 "use client";
 
-import axios from "axios";
-import { redirect } from "next/navigation";
-import { gameService } from "@/services/game"
-import { playerService } from "@/services/player"
+import { gameService } from "@/services/game";
 
 type StartButtonProps = {
   gameId: string;
@@ -12,7 +9,6 @@ type StartButtonProps = {
 export default function StartButton({ gameId, ...props }: StartButtonProps) {
   const handleStartGame = async () => {
     gameService.startGame(gameId);
-    playerService.redirectPlayers(gameId);
   };
 
   return (

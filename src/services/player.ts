@@ -1,11 +1,9 @@
 import { database } from "@/lib/firebase";
+import { PlayerProps } from "@/types";
 import { DatabaseReference, get, ref, set } from "firebase/database";
-import { onValue } from "firebase/database";
 import Cookies from "js-cookie";
-import { redirect } from 'next/navigation'
-import path from "path";
 
-const getPlayerById = async (gameId: string): Promise<{ player: any }> => {
+const getPlayerById = async (gameId: string): Promise<{ player: PlayerProps }> => {
   try {
     const playerToken = Cookies.get("player_token");
     const playerRef = ref(database, `games/${gameId}/players/${playerToken}`);
@@ -38,9 +36,4 @@ const logoutPlayer = (gameId: string): void => {
   }
 };
 
-const redirectPlayers = (gameId: string) => {
-  const id = Cookies.get('player_token');
-  redirect(`${gameId}/comic/${id}`)
-}
-
-export const playerService = { getPlayerById, logoutPlayer, getAllPlayers, redirectPlayers };
+export const playerService = { getPlayerById, logoutPlayer, getAllPlayers };
