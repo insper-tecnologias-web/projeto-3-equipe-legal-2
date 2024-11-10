@@ -20,37 +20,6 @@ const getGameById = async (
   }
 };
 
-const getPlayers = async (
-  gameId: string,
-): Promise<{ snapShot: DataSnapshot }> => {
-  try {
-    const playersRef = ref(database, `games/${gameId}/players`);
-    const snapShot = await get(playersRef);
-
-    if (!snapShot.exists()) {
-      throw new Error('O jogo não tem jogadores');
-    }
-
-    return { snapShot };
-  } catch (error) {
-    throw new Error(`Erro: ${error}`);
-  }
-};
-
-const addPlayer = async (gameId: string, name: string): Promise<void> => {
-  const playerId = uuid();
-  const playerRef = ref(database, `games/${gameId}/players/${playerId}`);
-
-  const playerData = {
-    name,
-    isHost: false,
-  };
-
-  await update(playerRef, playerData);
-
-  Cookies.set('player_token', playerId);
-};
-
 const createGame = async (name: string): Promise<{ gameId: string }> => {
   const gameRef = push(ref(database, 'games'));
 
@@ -80,8 +49,6 @@ const startGame = async (gameId: string) => {
 
 export const gameService = {
   getGameById,
-  getPlayers,
-  addPlayer,
   createGame,
   startGame,
 };

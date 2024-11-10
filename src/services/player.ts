@@ -1,7 +1,8 @@
 import { database } from '@/lib/firebase';
 import { PlayerProps } from '@/types';
-import { DatabaseReference, get, ref, set } from 'firebase/database';
+import { DatabaseReference, get, ref, set, update } from 'firebase/database';
 import Cookies from 'js-cookie';
+import { v4 as uuid } from 'uuid';
 
 const getPlayerById = async (
   gameId: string,
@@ -28,6 +29,20 @@ const getAllPlayers = (gameId: string): { playersRef: DatabaseReference } => {
   }
 };
 
+const addPlayer = async (gameId: string, name: string): Promise<void> => {
+  const playerId = uuid();
+  const playerRef = ref(database, `games/${gameId}/players/${playerId}`);
+
+  const playerData = {
+    name,
+    isHost: false,
+  };
+
+  await update(playerRef, playerData);
+
+  Cookies.set('player_token', playerId);
+};
+
 const logoutPlayer = (gameId: string): void => {
   try {
     const playerToken = Cookies.get('player_token');
@@ -38,4 +53,9 @@ const logoutPlayer = (gameId: string): void => {
   }
 };
 
-export const playerService = { getPlayerById, logoutPlayer, getAllPlayers };
+export const playerService = {
+  getPlayerById,
+  addPlayer,
+  logoutPlayer,
+  getAllPlayers,
+};

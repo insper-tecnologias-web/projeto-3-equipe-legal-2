@@ -4,7 +4,7 @@ import { InviteButton } from '@/components/inviteButton';
 import StartButton from '@/components/startButton';
 import { AuthContext } from '@/contexts/AuthContext';
 import useGameStatusListener from '@/hooks/useGameStatusListener';
-import { gameService } from '@/services/game';
+import { playerService } from '@/services/player';
 import { useContext, useState } from 'react';
 
 export function Player({ gameId }: { gameId: string }) {
@@ -13,7 +13,7 @@ export function Player({ gameId }: { gameId: string }) {
   useGameStatusListener(gameId);
 
   const handleJoinGame = async () => {
-    await gameService.addPlayer(gameId, name);
+    await playerService.addPlayer(gameId, name);
 
     setName('');
     fetchPlayer();

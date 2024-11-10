@@ -1,8 +1,7 @@
 'use client';
 
 import { useDraw } from '@/hooks/useDraw';
-import { base64ToImage } from '@/utils/save-image';
-import Cookies from 'js-cookie';
+import { comicService } from '@/services/comic';
 
 type Draw = {
   ctx: CanvasRenderingContext2D;
@@ -14,12 +13,12 @@ export function Canvas({
   w,
   h,
   gameId,
-  turn,
+  round,
 }: {
   w: number;
   h: number;
   gameId: string;
-  turn: number;
+  round: number;
 }) {
   const { canvasRef, onMouseDown } = useDraw(drawLine);
 
@@ -42,14 +41,12 @@ export function Canvas({
     ctx.fill();
   }
 
-  function saveImage() {
+  async function saveImage() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
     const image = canvas.toDataURL();
-    const playerId = Cookies.get('player_token');
-
-    base64ToImage(image, `public/${gameId}/${playerId}`, turn.toFixed());
+    await comicService.addDrawing(gameId, image, round);
   }
 
   return (
