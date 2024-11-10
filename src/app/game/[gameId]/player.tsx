@@ -1,15 +1,15 @@
 'use client';
 
-import { InviteButton } from "@/components/inviteButton";
-import StartButton from "@/components/startButton";
-import { AuthContext } from "@/contexts/AuthContext";
-import useGameStatusListener from "@/hooks/useGameStatusListener";
-import { gameService } from "@/services/game";
-import { useContext, useState } from "react";
+import { InviteButton } from '@/components/inviteButton';
+import StartButton from '@/components/startButton';
+import { AuthContext } from '@/contexts/AuthContext';
+import useGameStatusListener from '@/hooks/useGameStatusListener';
+import { gameService } from '@/services/game';
+import { useContext, useState } from 'react';
 
 export function Player({ gameId }: { gameId: string }) {
   const { players, fetchPlayer, player } = useContext(AuthContext);
-  const [name, setName] = useState("");
+  const [name, setName] = useState('');
   useGameStatusListener(gameId);
 
   const handleJoinGame = async () => {
