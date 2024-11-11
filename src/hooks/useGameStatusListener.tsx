@@ -11,18 +11,15 @@ function useGameStatusListener(gameId: string) {
   useEffect(() => {
     const gameStatusRef = ref(database, `games/${gameId}/status`);
 
-    // Listener para monitorar mudanças no gameStatus
     const unsubscribe = onValue(gameStatusRef, (snapshot) => {
       const gameStatus = snapshot.val();
 
-      // Verifica se o status foi alterado para "PLAYING"
       if (gameStatus === 'PLAYING') {
         console.log('O jogo começou! Redirecionando para a página do jogo...');
         router.push(`/game/${gameId}/comic/${playerId}`);
       }
     });
 
-    // Limpeza do listener ao desmontar o componente
     return () => unsubscribe();
   }, [gameId, router, playerId]);
 }

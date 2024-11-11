@@ -1,6 +1,7 @@
 'use client';
 
 import { useDraw } from '@/hooks/useDraw';
+import { comicService } from '@/services/comic';
 
 type Draw = {
   ctx: CanvasRenderingContext2D;
@@ -8,7 +9,17 @@ type Draw = {
   prevPoint: { x: number; y: number } | null;
 };
 
-export function Canvas({ w, h }: { w: number; h: number }) {
+export function Canvas({
+  w,
+  h,
+  gameId,
+  round,
+}: {
+  w: number;
+  h: number;
+  gameId: string;
+  round: number;
+}) {
   const { canvasRef, onMouseDown } = useDraw(drawLine);
 
   function drawLine({ ctx, currentPoint, prevPoint }: Draw) {
@@ -30,12 +41,12 @@ export function Canvas({ w, h }: { w: number; h: number }) {
     ctx.fill();
   }
 
-  function saveImage() {
+  async function saveImage() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
     const image = canvas.toDataURL();
-    console.log(image);
+    await comicService.addDrawing(gameId, image, round);
   }
 
   return (
