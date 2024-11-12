@@ -1,4 +1,3 @@
-import { Clock } from '@/components/clock';
 import { Form } from '@/components/form';
 import Image from 'next/image';
 
@@ -12,7 +11,6 @@ export default function Home() {
         height={240}
         className="mt-10"
       />
-      <Clock />
       <main className="flex gap-[10px]">
         <div className="flex flex-col items-center gap-4">
           <h1 className="text-2xl font-semibold">Crie o seu jogo</h1>
