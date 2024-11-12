@@ -1,4 +1,3 @@
-import { Canvas } from '@/components/canvas';
 import { Form } from '@/components/form';
 import Image from 'next/image';
 
@@ -60,7 +59,6 @@ export default function Home() {
           </div>
         </div>
       </main>
-      <Canvas w={700} h={700} />
     </div>
   );
 }
