@@ -37,7 +37,7 @@ export default function ComicForm({ gameId }: ComicFormProps) {
         disabled={hasComicTitle}
       />
       {hasComicTitle ? (
-        <div className="ml-4" onClick={handleEdit}>
+        <div className="ml-4 cursor-pointer" onClick={handleEdit}>
           Editar
         </div>
       ) : (
