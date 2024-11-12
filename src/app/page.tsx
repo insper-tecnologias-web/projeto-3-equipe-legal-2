@@ -23,6 +23,22 @@ export default function Home() {
               width={400}
               height={300}
               className="absolute -z-10 bottom-[72px] left-8"
+              unoptimized
+            />
+            <Image
+              src={'/rick3.gif'}
+              alt="Rick"
+              width={70}
+              height={150}
+              className="absolute -z-10 -bottom-1"
+              unoptimized
+            />
+            <Image
+              src={'/rick.svg'}
+              alt="Rick"
+              width={400}
+              height={300}
+              className="absolute -z-10 bottom-[72px] left-8"
             />
             <Image
               src={'/rick3.gif'}
@@ -37,6 +53,14 @@ export default function Home() {
         <div className="flex flex-col items-center gap-4">
           <h1 className="text-2xl font-semibold">Como jogar</h1>
           <div className="flex flex-wrap w-[450px] gap-[10px] text-center text-xl relative">
+            <Image
+              src={'/rick2.gif'}
+              alt="Rick"
+              width={43}
+              height={100}
+              className="absolute -z-10 -top-[67px] right-4"
+              unoptimized
+            />
             <Image
               src={'/rick2.gif'}
               alt="Rick"

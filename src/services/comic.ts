@@ -22,4 +22,11 @@ const addDrawing = async (
   await update(comicRef, { [round]: data });
 };
 
-export const comicService = { getComic, addDrawing };
+const addTitle = async (gameId: string, title: string): Promise<void> => {
+  const playerId = Cookies.get('player_token');
+  const comicRef = ref(database, `games/${gameId}/players/${playerId}/comic`);
+
+  await update(comicRef, { title });
+};
+
+export const comicService = { getComic, addDrawing, addTitle };

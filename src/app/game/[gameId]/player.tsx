@@ -5,6 +5,7 @@ import StartButton from '@/components/startButton';
 import { AuthContext } from '@/contexts/AuthContext';
 import useGameStatusListener from '@/hooks/useGameStatusListener';
 import { playerService } from '@/services/player';
+import Image from 'next/image';
 import { useContext, useState } from 'react';
 
 export function Player({ gameId }: { gameId: string }) {
@@ -23,15 +24,23 @@ export function Player({ gameId }: { gameId: string }) {
 
   return (
     <>
-      <div className="text-xl flex gap-5">
+      <div className="relative text-xl flex gap-5">
         {Object.keys(players)
           .reverse()
           .map((playerId) => (
-            <div
-              key={playerId}
-              className="w-60 h-60 flex items-center justify-center border-4 border-zinc-900"
-            >
-              <p>{players[playerId].name}</p>
+            <div key={playerId}>
+              {players[playerId].isHost && (
+                <Image
+                  src="/crown.svg"
+                  className="absolute -top-8"
+                  width={40}
+                  height={40}
+                  alt={'Curoa'}
+                />
+              )}
+              <div className="w-60 h-60 flex items-center justify-center border-4 border-zinc-900">
+                <p>{players[playerId].name}</p>
+              </div>
             </div>
           ))}
         {Array.from({ length: 4 - Object.keys(players).length }).map(
