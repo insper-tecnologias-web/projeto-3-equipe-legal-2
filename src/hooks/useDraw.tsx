@@ -17,6 +17,16 @@ export const useDraw = (
     setMouseDown(true);
   };
 
+  const clear = () => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas?.getContext('2d');
+    if (!ctx) return;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  };
+
   useEffect(() => {
     const canvas = canvasRef.current;
 
@@ -54,5 +64,5 @@ export const useDraw = (
     };
   }, [onDraw, mouseDown]);
 
-  return { canvasRef, onMouseDown };
+  return { canvasRef, onMouseDown, clear };
 };
