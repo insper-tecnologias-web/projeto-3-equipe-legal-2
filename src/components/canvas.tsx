@@ -1,9 +1,8 @@
 'use client';
 
 import { useDraw } from '@/hooks/useDraw';
-import { comicService } from '@/services/comic';
-import { ChromePicker } from 'react-color';
 import { useState } from 'react';
+import { ChromePicker } from 'react-color';
 
 type Draw = {
   ctx: CanvasRenderingContext2D;
@@ -14,8 +13,8 @@ type Draw = {
 export function Canvas({
   w,
   h,
-  gameId,
-  round,
+  // gameId,
+  // round,
 }: {
   w: number;
   h: number;
@@ -25,6 +24,8 @@ export function Canvas({
   const { canvasRef, onMouseDown, clear } = useDraw(drawLine);
   const [color, setColor] = useState<string>('#000000');
   const [lineWidth, setLineWidth] = useState<number>(3);
+  const [isDrawing, setIsDrawing] = useState(true);
+  const [save, setSave] = useState(true);
 
   function drawLine({ ctx, currentPoint, prevPoint }: Draw) {
     const startPoint = prevPoint ?? currentPoint;
@@ -43,6 +44,7 @@ export function Canvas({
   }
 
   const setDraw = () => {
+    setIsDrawing(true);
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -53,6 +55,7 @@ export function Canvas({
   };
 
   const setErase = () => {
+    setIsDrawing(false);
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -62,12 +65,13 @@ export function Canvas({
     ctx.globalCompositeOperation = 'destination-out';
   };
 
-  async function saveImage() {
+  async function toggleSave() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const image = canvas.toDataURL();
-    await comicService.addDrawing(gameId, image, round);
+    setSave((prev) => !prev);
+    // const image = canvas.toDataURL();
+    // await comicService.addDrawing(gameId, image, round);
   }
 
   return (
@@ -81,42 +85,42 @@ export function Canvas({
           />
           <div className="flex gap-3">
             <button
-              className="border-2 border-zinc-900 p-2 text-xl"
+              className={`border-2  p-2 text-xl ${isDrawing ? 'border-red-600' : 'border-zinc-900'}`}
               onClick={setDraw}
             >
               ✏️
             </button>
             <button
-              className="border-2 border-zinc-900 p-2 text-xl"
+              className={`border-2  p-2 text-xl ${!isDrawing ? 'border-red-600' : 'border-zinc-900'}`}
               onClick={setErase}
             >
               👻
             </button>
           </div>
-          <div className="flex gap-3">
+          <div className="flex gap-3 w-full">
             <button
-              className="border-2 border-zinc-900 p-2 text-xl"
+              className={`border-2 flex justify-center flex-1 p-2 text-xl ${lineWidth === 3 ? 'border-red-600' : 'border-zinc-900'}`}
               onClick={() => setLineWidth(3)}
             >
-              3
+              <span className="w-[1px] h-6 bg-zinc-900 block"></span>
             </button>
             <button
-              className="border-2 border-zinc-900 p-2 text-xl"
+              className={`border-2 flex justify-center p-2 flex-1 text-xl ${lineWidth === 5 ? 'border-red-600' : 'border-zinc-900'}`}
               onClick={() => setLineWidth(5)}
             >
-              5
+              <span className="w-[2px] h-6 bg-zinc-900 block"></span>
             </button>
             <button
-              className="border-2 border-zinc-900 p-2 text-xl"
+              className={`border-2 flex justify-center p-2 flex-1 text-xl ${lineWidth === 8 ? 'border-red-600' : 'border-zinc-900'}`}
               onClick={() => setLineWidth(8)}
             >
-              8
+              <span className="w-[3px] h-6 bg-zinc-900 block"></span>
             </button>
             <button
-              className="border-2 border-zinc-900 p-2 text-xl"
+              className={`border-2 flex justify-center p-2 flex-1 text-xl ${lineWidth === 10 ? 'border-red-600' : 'border-zinc-900'}`}
               onClick={() => setLineWidth(10)}
             >
-              10
+              <span className="w-[4px] h-6 bg-zinc-900 block"></span>
             </button>
           </div>
           <button
@@ -126,20 +130,22 @@ export function Canvas({
             Apagar desenho
           </button>
         </div>
-        <canvas
-          onMouseDown={onMouseDown}
-          ref={canvasRef}
-          width={w}
-          height={h}
-          className="border-4 border-zinc-900"
-        />
+        <div className="flex flex-col gap-5">
+          <canvas
+            onMouseDown={onMouseDown}
+            ref={canvasRef}
+            width={w}
+            height={h}
+            className="border-4 border-zinc-900"
+          />
+          <button
+            className="border-4 border-zinc-900 p-2 text-xl semibold w-fit]"
+            onClick={toggleSave}
+          >
+            {save ? 'Salvar' : 'Editar'}
+          </button>
+        </div>
       </div>
-      <button
-        className="border-4 border-zinc-900 p-2 text-xl semibold w-fit]"
-        onClick={saveImage}
-      >
-        Salvar
-      </button>
     </div>
   );
 }
