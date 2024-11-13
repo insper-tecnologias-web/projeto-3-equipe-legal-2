@@ -2,13 +2,18 @@ import { database } from '@/lib/firebase';
 import { get, ref, update } from 'firebase/database';
 import Cookies from 'js-cookie';
 
-const getComic = async (gameId: string): Promise<Record<string, string>> => {
-  const playerId = Cookies.get('player_token');
+const getComic = async (
+  gameId: string,
+  playerId?: string,
+): Promise<Record<string, string>> => {
+  if (!playerId) {
+    playerId = Cookies.get('player_token');
+  }
   const comicRef = ref(database, `games/${gameId}/players/${playerId}/comic`);
+  const snapShot = await get(comicRef);
 
-  const drawings = (await get(comicRef)).val() as Record<string, string>;
-
-  return drawings;
+  const comic = snapShot.val() as Record<string, string>;
+  return comic;
 };
 
 const addDrawing = async (

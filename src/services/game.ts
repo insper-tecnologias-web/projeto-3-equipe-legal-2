@@ -11,7 +11,7 @@ const getGameById = async (
     const snapShot = await get(gameRef);
 
     if (!snapShot.exists()) {
-      throw new Error('O jogador não existe');
+      throw new Error('O jogo não existe');
     }
 
     return { snapShot };
@@ -43,12 +43,37 @@ const createGame = async (name: string): Promise<{ gameId: string }> => {
 
 const startGame = async (gameId: string) => {
   const gameRef = ref(database, `games/${gameId}`);
+  const playersRef = ref(database, `games/${gameId}/players`);
+  const players = (await get(playersRef)).val() as Record<string, string>;
+  const playerIds = Object.keys(players);
+  const endTime = Date.now() + 60 * 1000;
 
-  await update(gameRef, { status: 'PLAYING' });
+  const n = playerIds.length;
+  const square: string[][] = [];
+
+  for (let i = 0; i < n; i++) {
+    const row = playerIds.slice(i).concat(playerIds.slice(0, i));
+    square.push(row);
+  }
+
+  await update(gameRef, {
+    status: 'PLAYING',
+    round: 0,
+    endTime,
+    queue: square,
+  });
+};
+
+const nextRound = async (gameId: string, round: number) => {
+  const endTime = Date.now() + 60 * 1000;
+  const gameRef = ref(database, `games/${gameId}`);
+
+  await update(gameRef, { round, endTime });
 };
 
 export const gameService = {
   getGameById,
   createGame,
   startGame,
+  nextRound,
 };
