@@ -14,7 +14,11 @@ export default async function GamePage({ params }: GamePageProps) {
   const { gameId } = await params;
 
   try {
-    await gameService.getGameById(gameId);
+    const { snapShot } = await gameService.getGameById(gameId);
+
+    if (snapShot.val().round) {
+      redirect(`game/${gameId}/comic/`);
+    }
   } catch {
     redirect('/');
   }

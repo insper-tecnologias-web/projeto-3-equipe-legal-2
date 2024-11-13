@@ -1,30 +1,31 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import useGameTimer from '@/hooks/useGameTimer';
 
-export function Clock() {
-  const router = useRouter();
-  const [time, setTime] = useState(60);
+interface ClockProps {
+  gameId: string;
+  playerId: string;
+  round: number;
+}
 
-  useEffect(() => {
-    const timerId = setInterval(() => {
-      setTime((prevTime) => Math.max(prevTime - 1, 0));
-    }, 1000);
-
-    const redirectTimeout = setTimeout(() => {
-      router.push('/mudar');
-    }, 60000);
-
-    return () => {
-      clearInterval(timerId);
-      clearTimeout(redirectTimeout);
-    };
-  }, [router]);
+export function Clock({ gameId, playerId, round }: ClockProps) {
+  const timeLeft = useGameTimer(gameId, playerId, round);
 
   return (
-    <div className="font-semibold pt-9 text-xl text-center border-2 border-zinc-700 min-w-[6rem] min-h-[6rem] rounded-full">
-      {time}
+    <div className="absolute top-0 right-20 text-center flex flex-col items-center">
+      <div className="font-semibold pt-9 text-xl text-center border-2 border-zinc-700 w-[6rem] h-[6rem] rounded-full">
+        {timeLeft}
+      </div>
+      <p className="mt-4">Round {round} de 4</p>
+      {round === 0 ? (
+        <p className="font-semibold">
+          Coloque um título <br /> para o seu quadrinho
+        </p>
+      ) : (
+        <p className="font-semibold">
+          Clique no quadrinho <br /> para desenhar
+        </p>
+      )}
     </div>
   );
 }

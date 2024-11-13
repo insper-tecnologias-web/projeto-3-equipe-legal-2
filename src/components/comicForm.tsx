@@ -1,17 +1,17 @@
 'use client';
 
 import { comicService } from '@/services/comic';
-import React from 'react';
+import { useState } from 'react';
 
 type ComicFormProps = {
   gameId: string;
 };
 
 export default function ComicForm({ gameId }: ComicFormProps) {
-  const [hasComicTitle, setHasComicTitle] = React.useState(false);
+  const [save, setSave] = useState(false);
 
-  const handleEdit = () => {
-    setHasComicTitle(false);
+  const toggleSave = () => {
+    setSave((prev) => !prev);
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -20,24 +20,24 @@ export default function ComicForm({ gameId }: ComicFormProps) {
     const comicText = (form.elements.namedItem('comicText') as HTMLInputElement)
       .value;
     await comicService.addTitle(gameId, comicText);
-    setHasComicTitle(true);
+    setSave(true);
   };
 
   return (
     <form
-      className="flex mt-16 text-4xl decoration-none w-2/3 text-center"
+      className="flex text-4xl max-w-screen-xl w-full text-center items-center"
       onSubmit={handleSubmit}
     >
       <input
-        className="w-full text-center"
+        className="w-full text-center h-full outline-none"
         type="text"
         name="comicText"
         id="comicText"
         placeholder="Escreva o título da sua tirinha!"
-        disabled={hasComicTitle}
+        disabled={save}
       />
-      {hasComicTitle ? (
-        <div className="ml-4 cursor-pointer" onClick={handleEdit}>
+      {save ? (
+        <div className="ml-4 cursor-pointer" onClick={toggleSave}>
           Editar
         </div>
       ) : (
