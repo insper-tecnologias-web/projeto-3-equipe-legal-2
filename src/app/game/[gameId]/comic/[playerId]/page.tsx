@@ -38,6 +38,9 @@ export default async function ComicPage({
     redirect(`/game/${gameId}/comic/${playerId}?round=${realRound}`);
   }
 
+  const activeComics = [false, false, false, false];
+  if (realRound > 0 && realRound <= 4) activeComics[realRound - 1] = true;
+
   return (
     <div className="flex flex-col mt-16 items-center w-full relative">
       {round === '0' ? (
@@ -49,12 +52,32 @@ export default async function ComicPage({
 
       <div className="flex flex-row gap-4 mt-8">
         <div className="flex flex-col gap-4">
-          <Comic gameId={gameId} round={realRound} active />
-          <Comic gameId={gameId} round={realRound} />
+          <Comic
+            gameId={gameId}
+            playerId={nextPlayer}
+            round={realRound}
+            active={activeComics[0]}
+          />
+          <Comic
+            gameId={gameId}
+            playerId={nextPlayer}
+            round={realRound}
+            active={activeComics[2]}
+          />
         </div>
         <div className="flex flex-col gap-4">
-          <Comic gameId={gameId} round={realRound} />
-          <Comic gameId={gameId} round={realRound} />
+          <Comic
+            gameId={gameId}
+            playerId={nextPlayer}
+            round={realRound}
+            active={activeComics[1]}
+          />
+          <Comic
+            gameId={gameId}
+            playerId={nextPlayer}
+            round={realRound}
+            active={activeComics[3]}
+          />
         </div>
       </div>
     </div>

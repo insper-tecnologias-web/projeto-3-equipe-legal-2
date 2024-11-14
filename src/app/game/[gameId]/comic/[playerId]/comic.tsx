@@ -7,10 +7,12 @@ import { Canvas } from '@/components/canvas';
 
 export default function Comic({
   gameId,
+  playerId,
   round,
   active,
 }: {
   gameId: string;
+  playerId: string;
   round: number;
   active?: boolean;
 }) {
@@ -26,7 +28,13 @@ export default function Comic({
       </div>
 
       <Modal isVisible={modalVisible} onClose={() => setModalVisible(false)}>
-        <Canvas w={1310} h={710} gameId={gameId} round={round} />
+        <Canvas
+          w={1310}
+          h={710}
+          gameId={gameId}
+          playerId={playerId}
+          round={round}
+        />
       </Modal>
     </div>
   );
