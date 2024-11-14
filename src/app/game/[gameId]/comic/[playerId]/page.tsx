@@ -2,8 +2,8 @@ import { Clock } from '@/components/clock';
 import ComicForm from '@/components/comicForm';
 import { comicService } from '@/services/comic';
 import { gameService } from '@/services/game';
-import Image from 'next/image';
 import { redirect } from 'next/navigation';
+import Comic from './comic';
 
 type GamePageProps = {
   params: Promise<{
@@ -13,7 +13,10 @@ type GamePageProps = {
   searchParams: Promise<{ [round: string]: string | string[] | undefined }>;
 };
 
-export default async function Comic({ params, searchParams }: GamePageProps) {
+export default async function ComicPage({
+  params,
+  searchParams,
+}: GamePageProps) {
   const { gameId, playerId } = await params;
   const round = (await searchParams).round as string;
 
@@ -46,18 +49,12 @@ export default async function Comic({ params, searchParams }: GamePageProps) {
 
       <div className="flex flex-row gap-4 mt-8">
         <div className="flex flex-col gap-4">
-          <Image src="/comic1.svg" alt="Comic 1" width={655} height={355} />
-          <Image src="/comic4.svg" alt="Comic 4" width={550} height={355} />
+          <Comic gameId={gameId} round={realRound} active />
+          <Comic gameId={gameId} round={realRound} />
         </div>
         <div className="flex flex-col gap-4">
-          <Image src="/comic2.svg" alt="Comic 2" width={550} height={355} />
-          <Image
-            className="-translate-x-24"
-            src="/comic3.svg"
-            alt="Comic 5"
-            width={655}
-            height={355}
-          />
+          <Comic gameId={gameId} round={realRound} />
+          <Comic gameId={gameId} round={realRound} />
         </div>
       </div>
     </div>
