@@ -30,7 +30,7 @@ export default function Modal({ isVisible, onClose, children }: ModalProps) {
       className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
       onClick={handleOutsideClick}
     >
-      <div className="flex justify-center items-center bg-white rounded-lg shadow-lg p-10 relative">
+      <div className="flex justify w-[95vw] items-center bg-white rounded-lg shadow-lg p-12 relative">
         <button
           className="absolute top-2 right-4 text-black text-3xl"
           onClick={onClose}

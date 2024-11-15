@@ -1,18 +1,16 @@
 'use client';
 
-import useGameTimer from '@/hooks/useGameTimer';
+import { useTimer } from '@/contexts/TimerContext';
 
 interface ClockProps {
-  gameId: string;
-  playerId: string;
   round: number;
 }
 
-export function Clock({ gameId, playerId, round }: ClockProps) {
-  const timeLeft = useGameTimer(gameId, playerId, round);
+export function Clock({ round }: ClockProps) {
+  const { timeLeft } = useTimer();
 
   return (
-    <div className="absolute top-0 right-20 text-center flex flex-col items-center">
+    <div className="absolute top-10 right-20 text-center flex flex-col items-center">
       <div className="font-semibold pt-9 text-xl text-center border-2 border-zinc-700 w-[6rem] h-[6rem] rounded-full">
         {timeLeft}
       </div>

@@ -46,7 +46,7 @@ const startGame = async (gameId: string) => {
   const playersRef = ref(database, `games/${gameId}/players`);
   const players = (await get(playersRef)).val() as Record<string, string>;
   const playerIds = Object.keys(players);
-  const endTime = Date.now() + 60 * 1000;
+  const endTime = Date.now() + 62 * 1000;
 
   const n = playerIds.length;
   const square: string[][] = [];
