@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { Canvas } from '@/components/canvas';
+import { Clock } from '@/components/clock';
 import Modal from '@/components/modal';
 import Image from 'next/image';
-import { Canvas } from '@/components/canvas';
+import { useState } from 'react';
 
 export default function Comic({
   gameId,
@@ -24,17 +25,18 @@ export default function Comic({
         onClick={() => (active ? setModalVisible(true) : null)}
         className={`${active ? 'cursor-pointer' : 'opacity-30'} z-10`}
       >
-        <Image src="/comic1.svg" alt="Comic 1" width={655} height={355} />
+        <Image src="/comic1.svg" alt="Comic 1" width={625} height={350} />
       </div>
 
       <Modal isVisible={modalVisible} onClose={() => setModalVisible(false)}>
         <Canvas
-          w={1310}
-          h={710}
+          w={1250}
+          h={700}
           gameId={gameId}
           playerId={playerId}
           round={round}
         />
+        <Clock round={round} />
       </Modal>
     </div>
   );

@@ -33,6 +33,8 @@ export function Canvas({
   const timeLeft = useGameTimer(gameId, playerId, round);
 
   function drawLine({ ctx, currentPoint, prevPoint }: Draw) {
+    if (!save) return;
+
     const startPoint = prevPoint ?? currentPoint;
 
     ctx.beginPath();

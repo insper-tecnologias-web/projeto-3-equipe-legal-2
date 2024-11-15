@@ -1,5 +1,6 @@
 import { Clock } from '@/components/clock';
 import ComicForm from '@/components/comicForm';
+import { TimerProvider } from '@/contexts/TimerContext';
 import { comicService } from '@/services/comic';
 import { gameService } from '@/services/game';
 import { redirect } from 'next/navigation';
@@ -42,44 +43,46 @@ export default async function ComicPage({
   if (realRound > 0 && realRound <= 4) activeComics[realRound - 1] = true;
 
   return (
-    <div className="flex flex-col mt-16 items-center w-full relative">
-      {round === '0' ? (
-        <ComicForm gameId={gameId} />
-      ) : (
-        <h1 className="text-4xl">{comic.title}</h1>
-      )}
-      <Clock gameId={gameId} playerId={nextPlayer} round={realRound} />
+    <TimerProvider gameId={gameId} playerId={nextPlayer} round={realRound}>
+      <div className="flex flex-col mt-16 items-center w-full relative">
+        {round === '0' ? (
+          <ComicForm gameId={gameId} />
+        ) : (
+          <h1 className="text-4xl">{comic.title}</h1>
+        )}
+        <Clock round={realRound} />
 
-      <div className="flex flex-row gap-4 mt-8">
-        <div className="flex flex-col gap-4">
-          <Comic
-            gameId={gameId}
-            playerId={nextPlayer}
-            round={realRound}
-            active={activeComics[0]}
-          />
-          <Comic
-            gameId={gameId}
-            playerId={nextPlayer}
-            round={realRound}
-            active={activeComics[2]}
-          />
-        </div>
-        <div className="flex flex-col gap-4">
-          <Comic
-            gameId={gameId}
-            playerId={nextPlayer}
-            round={realRound}
-            active={activeComics[1]}
-          />
-          <Comic
-            gameId={gameId}
-            playerId={nextPlayer}
-            round={realRound}
-            active={activeComics[3]}
-          />
+        <div className="flex flex-row gap-4 mt-8">
+          <div className="flex flex-col gap-4">
+            <Comic
+              gameId={gameId}
+              playerId={nextPlayer}
+              round={realRound}
+              active={activeComics[0]}
+            />
+            <Comic
+              gameId={gameId}
+              playerId={nextPlayer}
+              round={realRound}
+              active={activeComics[2]}
+            />
+          </div>
+          <div className="flex flex-col gap-4">
+            <Comic
+              gameId={gameId}
+              playerId={nextPlayer}
+              round={realRound}
+              active={activeComics[1]}
+            />
+            <Comic
+              gameId={gameId}
+              playerId={nextPlayer}
+              round={realRound}
+              active={activeComics[3]}
+            />
+          </div>
         </div>
       </div>
-    </div>
+    </TimerProvider>
   );
 }
