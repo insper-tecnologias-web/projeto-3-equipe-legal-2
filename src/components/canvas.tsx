@@ -78,7 +78,7 @@ export function Canvas({
 
     setSave((prev) => !prev);
     const image = canvas.toDataURL();
-    await comicService.addDrawing(gameId, image, round);
+    await comicService.addDrawing(gameId, playerId, image, round);
   }
 
   useEffect(() => {
@@ -87,7 +87,7 @@ export function Canvas({
       if (!canvas) return;
 
       const image = canvas.toDataURL();
-      comicService.addDrawing(gameId, image, round);
+      comicService.addDrawing(gameId, playerId, image, round);
     }
   }, [timeLeft, canvasRef, gameId, round]);
 

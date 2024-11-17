@@ -56,28 +56,28 @@ export default async function ComicPage({
           <div className="flex flex-col gap-4">
             <Comic
               gameId={gameId}
-              playerId={nextPlayer}
-              round={realRound}
+              playerId={playerId} // Usando o playerId do jogador atual
+              round={1}
               active={activeComics[0]}
             />
             <Comic
               gameId={gameId}
-              playerId={nextPlayer}
-              round={realRound}
+              playerId={playerId}
+              round={3}
               active={activeComics[2]}
             />
           </div>
           <div className="flex flex-col gap-4">
             <Comic
               gameId={gameId}
-              playerId={nextPlayer}
-              round={realRound}
+              playerId={playerId}
+              round={2}
               active={activeComics[1]}
             />
             <Comic
               gameId={gameId}
-              playerId={nextPlayer}
-              round={realRound}
+              playerId={playerId}
+              round={4}
               active={activeComics[3]}
             />
           </div>
