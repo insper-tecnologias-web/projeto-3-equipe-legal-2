@@ -54,12 +54,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
   useEffect(() => {
     const { playersRef } = playerService.getAllPlayers(gameId as string);
 
-    onValue(playersRef, (snapshot) => {
+    const unsubscribe = onValue(playersRef, (snapshot) => {
       const data = snapshot.val();
       setPlayers(data || {});
     });
 
     fetchPlayer();
+    return () => unsubscribe();
   }, [gameId, fetchPlayer]);
 
   const contextValue = useMemo(

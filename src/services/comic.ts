@@ -5,14 +5,14 @@ import Cookies from 'js-cookie';
 const getComic = async (
   gameId: string,
   playerId?: string,
-): Promise<Record<string, string>> => {
+): Promise<{ drawings: string[]; title: string }> => {
   if (!playerId) {
     playerId = Cookies.get('player_token');
   }
   const comicRef = ref(database, `games/${gameId}/players/${playerId}/comic`);
   const snapShot = await get(comicRef);
 
-  const comic = snapShot.val() as Record<string, string>;
+  const comic = snapShot.val() as { drawings: string[]; title: string };
   return comic;
 };
 
