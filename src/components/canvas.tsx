@@ -80,7 +80,7 @@ export function Canvas({
     setSave((prev) => !prev);
     const image = canvas.toDataURL();
     await comicService.addDrawing(gameId, playerId, image, round);
-    await playerService.playerReady(gameId, save, round);
+    await playerService.playerReady(gameId, save);
   }
 
   useEffect(() => {

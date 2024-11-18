@@ -13,7 +13,7 @@ export default function ComicForm({ gameId }: ComicFormProps) {
 
   const toggleSave = () => {
     if (isReady) {
-      playerService.playerReady(gameId, !isReady, 0);
+      playerService.playerReady(gameId, !isReady);
     }
 
     setIsReady((prev) => !prev);
@@ -25,7 +25,7 @@ export default function ComicForm({ gameId }: ComicFormProps) {
     const comicText = (form.elements.namedItem('comicText') as HTMLInputElement)
       .value;
     await comicService.addTitle(gameId, comicText);
-    playerService.playerReady(gameId, !isReady, 0);
+    playerService.playerReady(gameId, !isReady);
     setIsReady(true);
   };
 
