@@ -1,11 +1,11 @@
 'use client';
 
+import { useTimer } from '@/contexts/TimerContext';
 import { useDraw } from '@/hooks/useDraw';
-import useGameTimer from '@/hooks/useGameTimer';
 import { comicService } from '@/services/comic';
+import { playerService } from '@/services/player';
 import { useEffect, useState } from 'react';
 import { ChromePicker } from 'react-color';
-import { playerService } from '@/services/player';
 
 type Draw = {
   ctx: CanvasRenderingContext2D;
@@ -31,7 +31,7 @@ export function Canvas({
   const [lineWidth, setLineWidth] = useState<number>(3);
   const [isDrawing, setIsDrawing] = useState(true);
   const [save, setSave] = useState(true);
-  const timeLeft = useGameTimer(gameId, playerId, round);
+  const { timeLeft } = useTimer();
 
   function drawLine({ ctx, currentPoint, prevPoint }: Draw) {
     if (!save) return;
@@ -79,9 +79,8 @@ export function Canvas({
 
     setSave((prev) => !prev);
     const image = canvas.toDataURL();
-    await comicService.addDrawing(gameId, image, round);
-
-    playerService.playerReady(gameId, save, round);
+    await comicService.addDrawing(gameId, playerId, image, round);
+    await playerService.playerReady(gameId, save, round);
   }
 
   useEffect(() => {
@@ -90,9 +89,9 @@ export function Canvas({
       if (!canvas) return;
 
       const image = canvas.toDataURL();
-      comicService.addDrawing(gameId, image, round);
+      comicService.addDrawing(gameId, playerId, image, round);
     }
-  }, [timeLeft, canvasRef, gameId, round]);
+  }, [timeLeft, canvasRef, gameId, round, playerId]);
 
   return (
     <div className="flex flex-col gap-5">

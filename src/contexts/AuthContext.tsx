@@ -3,6 +3,7 @@
 import { playerService } from '@/services/player';
 import { PlayerProps } from '@/types';
 import { onValue } from 'firebase/database';
+import Cookies from 'js-cookie';
 import { useParams } from 'next/navigation';
 import {
   createContext,
@@ -41,7 +42,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const { gameId } = useParams();
 
   const fetchPlayer = useCallback(async () => {
-    const { player } = await playerService.getPlayerById(gameId as string);
+    const playerId = Cookies.get('player_token');
+    const { player } = await playerService.getPlayerById(
+      gameId as string,
+      playerId as string,
+    );
 
     setPlayer(player);
   }, [gameId]);

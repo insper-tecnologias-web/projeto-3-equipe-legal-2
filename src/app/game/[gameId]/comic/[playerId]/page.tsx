@@ -3,7 +3,7 @@ import ComicForm from '@/components/comicForm';
 import { TimerProvider } from '@/contexts/TimerContext';
 import { comicService } from '@/services/comic';
 import { gameService } from '@/services/game';
-import { redirect } from 'next/navigation';
+import { playerService } from '@/services/player';
 import Comic from './comic';
 
 type GamePageProps = {
@@ -33,17 +33,30 @@ export default async function ComicPage({
     nextPlayer = queue[realRound][pos];
   }
 
+  const { player } = await playerService.getPlayerById(gameId, playerId);
   const comic = await comicService.getComic(gameId, playerId);
 
-  if (realRound != round) {
-    redirect(`/game/${gameId}/comic/${playerId}?round=${realRound}`);
-  }
+  // if (realRound != round) {
+  //   redirect(`/game/${gameId}/comic/${playerId}?round=${realRound}`);
+  // }
 
   const activeComics = [false, false, false, false];
   if (realRound > 0 && realRound <= 4) activeComics[realRound - 1] = true;
 
+  console.log({
+    round: realRound,
+    player: playerId,
+    playerPos: pos,
+    nextPlayer: nextPlayer,
+  });
+
   return (
-    <TimerProvider gameId={gameId} playerId={nextPlayer} round={realRound}>
+    <TimerProvider
+      gameId={gameId}
+      playerId={nextPlayer}
+      isHost={player.isHost}
+      round={realRound}
+    >
       <div className="flex flex-col mt-16 items-center w-full relative">
         {round === '0' ? (
           <ComicForm gameId={gameId} />
@@ -56,28 +69,28 @@ export default async function ComicPage({
           <div className="flex flex-col gap-4">
             <Comic
               gameId={gameId}
-              playerId={nextPlayer}
-              round={realRound}
+              playerId={playerId}
+              round={1}
               active={activeComics[0]}
             />
             <Comic
               gameId={gameId}
-              playerId={nextPlayer}
-              round={realRound}
+              playerId={playerId}
+              round={3}
               active={activeComics[2]}
             />
           </div>
           <div className="flex flex-col gap-4">
             <Comic
               gameId={gameId}
-              playerId={nextPlayer}
-              round={realRound}
+              playerId={playerId}
+              round={2}
               active={activeComics[1]}
             />
             <Comic
               gameId={gameId}
-              playerId={nextPlayer}
-              round={realRound}
+              playerId={playerId}
+              round={4}
               active={activeComics[3]}
             />
           </div>

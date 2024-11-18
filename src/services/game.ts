@@ -64,8 +64,14 @@ const startGame = async (gameId: string) => {
   });
 };
 
+const finishGame = async (gameId: string) => {
+  const gameRef = ref(database, `games/${gameId}`);
+
+  await update(gameRef, { status: 'FINISHED' });
+};
+
 const nextRound = async (gameId: string, round: number) => {
-  const endTime = Date.now() + 60 * 1000;
+  const endTime = Date.now() + 62 * 1000;
   const gameRef = ref(database, `games/${gameId}`);
 
   await update(gameRef, { round, endTime });
@@ -75,5 +81,6 @@ export const gameService = {
   getGameById,
   createGame,
   startGame,
+  finishGame,
   nextRound,
 };

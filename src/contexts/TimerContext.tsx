@@ -11,6 +11,7 @@ interface TimerContextData {
 interface TimerProviderProps {
   gameId: string;
   playerId: string;
+  isHost: boolean;
   round: number;
   children: ReactNode;
 }
@@ -20,10 +21,11 @@ export const TimerContext = createContext({} as TimerContextData);
 export function TimerProvider({
   gameId,
   playerId,
+  isHost,
   round,
   children,
 }: TimerProviderProps) {
-  const timeLeft = useGameTimer(gameId, playerId, round);
+  const timeLeft = useGameTimer(gameId, playerId, isHost, round);
   const nextRound = useChangeRound(gameId, playerId, round);
 
   const contextValue = useMemo(

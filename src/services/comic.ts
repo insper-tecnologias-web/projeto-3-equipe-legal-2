@@ -18,10 +18,10 @@ const getComic = async (
 
 const addDrawing = async (
   gameId: string,
+  playerId: string,
   data: string,
   round: number,
 ): Promise<void> => {
-  const playerId = Cookies.get('player_token');
   const comicRef = ref(
     database,
     `games/${gameId}/players/${playerId}/comic/drawings`,
