@@ -1,6 +1,7 @@
 'use client';
 
 import { comicService } from '@/services/comic';
+import { playerService } from '@/services/player';
 import { useState } from 'react';
 
 type ComicFormProps = {
@@ -12,6 +13,8 @@ export default function ComicForm({ gameId }: ComicFormProps) {
 
   const toggleSave = () => {
     setSave((prev) => !prev);
+
+    playerService.playerReady(gameId, save, 0);
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {

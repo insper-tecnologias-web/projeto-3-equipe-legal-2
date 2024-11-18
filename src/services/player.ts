@@ -3,6 +3,7 @@ import { PlayerProps } from '@/types';
 import { DatabaseReference, get, ref, set, update } from 'firebase/database';
 import Cookies from 'js-cookie';
 import { v4 as uuid } from 'uuid';
+import { gameService } from './game';
 
 const getPlayerById = async (
   gameId: string,
@@ -36,6 +37,7 @@ const addPlayer = async (gameId: string, name: string): Promise<void> => {
   const playerData = {
     name,
     isHost: false,
+    ready: false,
   };
 
   await update(playerRef, playerData);
@@ -53,9 +55,57 @@ const logoutPlayer = (gameId: string): void => {
   }
 };
 
+const playerReady = async (
+  gameId: string,
+  save: boolean,
+  round: number,
+): Promise<void> => {
+  const playerId = Cookies.get('player_token');
+  const saveRef = ref(database, `games/${gameId}/players/${playerId}/ready`);
+
+  await update(saveRef, { save });
+
+  const playersRef = ref(database, `games/${gameId}/players`);
+  const playersSnapshot = await get(playersRef);
+  const players = playersSnapshot.val();
+
+  let allReady = true;
+  for (const playerKey in players) {
+    const player = players[playerKey];
+    if (!player.ready) {
+      allReady = false;
+      console.log(`Player ${playerKey} is not ready.`);
+      break;
+    }
+  }
+
+  if (allReady) {
+    gameService.nextRound(gameId, round + 1);
+    if (playerId) {
+      await update(ref(database, `games/${gameId}`), {
+        status: 'nextRound',
+      });
+
+      setTimeout(async () => {
+        const updates: Record<string, unknown> = {};
+        for (const playerKey in players) {
+          updates[`/players/${playerKey}/ready`] = false;
+        }
+
+        updates[`/status`] = 'PLAYING';
+        await update(ref(database, `games/${gameId}`), updates);
+        console.log('Game status reset to PLAYING for the next round.');
+      }, 1000); // Adjust delay as needed
+    }
+  } else {
+    console.log('nãopode');
+  }
+};
+
 export const playerService = {
   getPlayerById,
   addPlayer,
   logoutPlayer,
   getAllPlayers,
+  playerReady,
 };
