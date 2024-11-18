@@ -36,19 +36,8 @@ export default async function ComicPage({
   const { player } = await playerService.getPlayerById(gameId, playerId);
   const comic = await comicService.getComic(gameId, playerId);
 
-  // if (realRound != round) {
-  //   redirect(`/game/${gameId}/comic/${playerId}?round=${realRound}`);
-  // }
-
   const activeComics = [false, false, false, false];
   if (realRound > 0 && realRound <= 4) activeComics[realRound - 1] = true;
-
-  console.log({
-    round: realRound,
-    player: playerId,
-    playerPos: pos,
-    nextPlayer: nextPlayer,
-  });
 
   return (
     <TimerProvider

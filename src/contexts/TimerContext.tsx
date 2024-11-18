@@ -1,6 +1,5 @@
 'use client';
 
-import useChangeRound from '@/hooks/useChangeRound';
 import useGameTimer from '@/hooks/useGameTimer';
 import { createContext, ReactNode, useContext, useMemo } from 'react';
 
@@ -26,14 +25,12 @@ export function TimerProvider({
   children,
 }: TimerProviderProps) {
   const timeLeft = useGameTimer(gameId, playerId, isHost, round);
-  const nextRound = useChangeRound(gameId, playerId, round);
 
   const contextValue = useMemo(
     () => ({
       timeLeft,
-      nextRound,
     }),
-    [timeLeft, nextRound],
+    [timeLeft],
   );
 
   return (

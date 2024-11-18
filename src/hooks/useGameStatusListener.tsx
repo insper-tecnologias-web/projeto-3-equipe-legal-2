@@ -14,7 +14,7 @@ function useGameStatusListener(gameId: string) {
     const unsubscribe = onValue(gameStatusRef, (snapshot) => {
       const gameStatus = snapshot.val();
 
-      if (gameStatus === 'PLAYING') {
+      if (gameStatus === 'STARTED') {
         console.log('O jogo começou! Redirecionando para a página do jogo...');
         router.push(`/game/${gameId}/comic/${playerId}?round=0`);
       } else if (gameStatus === 'FINISHED') {

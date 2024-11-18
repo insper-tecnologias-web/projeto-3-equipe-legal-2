@@ -57,7 +57,7 @@ const startGame = async (gameId: string) => {
   }
 
   await update(gameRef, {
-    status: 'PLAYING',
+    status: 'STARTED',
     round: 0,
     endTime,
     queue: square,
@@ -74,7 +74,15 @@ const nextRound = async (gameId: string, round: number) => {
   const endTime = Date.now() + 62 * 1000;
   const gameRef = ref(database, `games/${gameId}`);
 
-  await update(gameRef, { round, endTime });
+  await update(gameRef, { round, endTime, status: 'PLAYING' });
+};
+
+const handleRoundCompletion = async (gameId: string, round: number) => {
+  if (round === 4) {
+    await gameService.finishGame(gameId);
+  } else {
+    await gameService.nextRound(gameId, round + 1);
+  }
 };
 
 export const gameService = {
@@ -83,4 +91,5 @@ export const gameService = {
   startGame,
   finishGame,
   nextRound,
+  handleRoundCompletion,
 };

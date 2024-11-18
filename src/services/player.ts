@@ -55,11 +55,7 @@ const logoutPlayer = (gameId: string): void => {
   }
 };
 
-const playerReady = async (
-  gameId: string,
-  isReady: boolean,
-  round: number,
-): Promise<void> => {
+const playerReady = async (gameId: string, isReady: boolean): Promise<void> => {
   const playerId = Cookies.get('player_token');
   const saveRef = ref(database, `games/${gameId}/players/${playerId}`);
 
@@ -79,22 +75,18 @@ const playerReady = async (
   }
 
   if (allReady) {
-    gameService.nextRound(gameId, round + 1);
-    if (playerId) {
-      await update(ref(database, `games/${gameId}`), {
-        status: 'nextRound',
+    const gameRef = ref(database, `games/${gameId}`);
+    const gameSnapshot = await get(gameRef);
+    const gameData = gameSnapshot.val();
+    const currentRound = gameData.round;
+
+    for (const playerKey in players) {
+      if (players[playerKey].isHost) {
+        await gameService.handleRoundCompletion(gameId, currentRound);
+      }
+      await update(ref(database, `games/${gameId}/players/${playerKey}`), {
+        ready: false,
       });
-
-      setTimeout(async () => {
-        const updates: Record<string, unknown> = {};
-        for (const playerKey in players) {
-          updates[`/players/${playerKey}/ready`] = false;
-        }
-
-        updates[`/status`] = 'PLAYING';
-        await update(ref(database, `games/${gameId}`), updates);
-        console.log('Game status reset to PLAYING for the next round.');
-      }, 1000);
     }
   }
 };
