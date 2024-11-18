@@ -3,10 +3,11 @@
 import { Canvas } from '@/components/canvas';
 import { Clock } from '@/components/clock';
 import Modal from '@/components/modal';
-import Image from 'next/image';
-import { useState, useEffect } from 'react';
+import useGameStatusListener from '@/hooks/useGameStatusListener';
 import { database } from '@/lib/firebase';
-import { ref, onValue } from 'firebase/database';
+import { onValue, ref } from 'firebase/database';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
 interface Comic {
   title: string;
@@ -26,6 +27,7 @@ export default function Comic({
 }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [comic, setComic] = useState<Comic | null>(null);
+  useGameStatusListener(gameId);
 
   useEffect(() => {
     if (round > 0) {

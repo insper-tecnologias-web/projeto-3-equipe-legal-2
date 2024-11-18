@@ -26,14 +26,17 @@ function useGameTimer(
           setTimeLeft(Math.floor(timeRemaining / 1000));
 
           if (timeRemaining <= 0) {
-            if (round === 5) {
-              router.push(`/game/${gameId}/results`);
+            if (round === 4) {
+              gameService.finishGame(gameId);
+            } else {
+              if (isHost) {
+                gameService.nextRound(gameId, round + 1);
+              }
+              clearInterval(interval);
+              router.push(
+                `/game/${gameId}/comic/${playerId}?round=${round + 1}`,
+              );
             }
-            if (isHost) {
-              gameService.nextRound(gameId, round + 1);
-            }
-            clearInterval(interval);
-            router.push(`/game/${gameId}/comic/${playerId}?round=${round + 1}`);
           }
         }, 1000);
 

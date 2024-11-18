@@ -17,6 +17,11 @@ function useGameStatusListener(gameId: string) {
       if (gameStatus === 'PLAYING') {
         console.log('O jogo começou! Redirecionando para a página do jogo...');
         router.push(`/game/${gameId}/comic/${playerId}?round=0`);
+      } else if (gameStatus === 'FINISHED') {
+        console.log(
+          'O jogo terminou! Redirecionando para a página de resultados...',
+        );
+        router.push(`/game/${gameId}/results`);
       }
     });
 
