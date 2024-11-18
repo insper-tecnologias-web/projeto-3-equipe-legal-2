@@ -57,13 +57,13 @@ const logoutPlayer = (gameId: string): void => {
 
 const playerReady = async (
   gameId: string,
-  save: boolean,
+  isReady: boolean,
   round: number,
 ): Promise<void> => {
   const playerId = Cookies.get('player_token');
-  const saveRef = ref(database, `games/${gameId}/players/${playerId}/ready`);
+  const saveRef = ref(database, `games/${gameId}/players/${playerId}`);
 
-  await update(saveRef, { save });
+  await update(saveRef, { ready: isReady });
 
   const playersRef = ref(database, `games/${gameId}/players`);
   const playersSnapshot = await get(playersRef);
@@ -74,7 +74,6 @@ const playerReady = async (
     const player = players[playerKey];
     if (!player.ready) {
       allReady = false;
-      console.log(`Player ${playerKey} is not ready.`);
       break;
     }
   }
@@ -95,10 +94,8 @@ const playerReady = async (
         updates[`/status`] = 'PLAYING';
         await update(ref(database, `games/${gameId}`), updates);
         console.log('Game status reset to PLAYING for the next round.');
-      }, 1000); // Adjust delay as needed
+      }, 1000);
     }
-  } else {
-    console.log('nãopode');
   }
 };
 
