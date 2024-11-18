@@ -26,6 +26,9 @@ function useGameTimer(
           setTimeLeft(Math.floor(timeRemaining / 1000));
 
           if (timeRemaining <= 0) {
+            if (round === 5) {
+              router.push(`/game/${gameId}/results`);
+            }
             if (isHost) {
               gameService.nextRound(gameId, round + 1);
             }

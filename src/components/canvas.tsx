@@ -1,7 +1,7 @@
 'use client';
 
+import { useTimer } from '@/contexts/TimerContext';
 import { useDraw } from '@/hooks/useDraw';
-import useGameTimer from '@/hooks/useGameTimer';
 import { comicService } from '@/services/comic';
 import { useEffect, useState } from 'react';
 import { ChromePicker } from 'react-color';
@@ -30,7 +30,7 @@ export function Canvas({
   const [lineWidth, setLineWidth] = useState<number>(3);
   const [isDrawing, setIsDrawing] = useState(true);
   const [save, setSave] = useState(true);
-  const timeLeft = useGameTimer(gameId, playerId, round);
+  const { timeLeft } = useTimer();
 
   function drawLine({ ctx, currentPoint, prevPoint }: Draw) {
     if (!save) return;

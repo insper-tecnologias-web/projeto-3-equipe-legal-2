@@ -4,7 +4,6 @@ import { TimerProvider } from '@/contexts/TimerContext';
 import { comicService } from '@/services/comic';
 import { gameService } from '@/services/game';
 import { playerService } from '@/services/player';
-import { redirect } from 'next/navigation';
 import Comic from './comic';
 
 type GamePageProps = {
@@ -36,15 +35,16 @@ export default async function ComicPage({
 
   const { player } = await playerService.getPlayerById(gameId, playerId);
   const comic = await comicService.getComic(gameId, playerId);
-  console.log(player);
-  if (realRound != round) {
-    redirect(`/game/${gameId}/comic/${playerId}?round=${realRound}`);
-  }
+
+  // if (realRound != round) {
+  //   redirect(`/game/${gameId}/comic/${playerId}?round=${realRound}`);
+  // }
 
   const activeComics = [false, false, false, false];
   if (realRound > 0 && realRound <= 4) activeComics[realRound - 1] = true;
 
   console.log({
+    round: realRound,
     player: playerId,
     playerPos: pos,
     nextPlayer: nextPlayer,
@@ -69,7 +69,7 @@ export default async function ComicPage({
           <div className="flex flex-col gap-4">
             <Comic
               gameId={gameId}
-              playerId={playerId} // Usando o playerId do jogador atual
+              playerId={playerId}
               round={1}
               active={activeComics[0]}
             />
