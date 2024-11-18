@@ -31,7 +31,7 @@ const createGame = async (name: string): Promise<{ gameId: string }> => {
   const newGame = {
     status: 'WAITING',
     players: {
-      [hostId]: { name: name, isHost: true },
+      [hostId]: { name: name, isHost: true, ready: false },
     },
   };
 

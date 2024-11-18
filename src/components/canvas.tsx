@@ -3,6 +3,7 @@
 import { useTimer } from '@/contexts/TimerContext';
 import { useDraw } from '@/hooks/useDraw';
 import { comicService } from '@/services/comic';
+import { playerService } from '@/services/player';
 import { useEffect, useState } from 'react';
 import { ChromePicker } from 'react-color';
 
@@ -79,6 +80,7 @@ export function Canvas({
     setSave((prev) => !prev);
     const image = canvas.toDataURL();
     await comicService.addDrawing(gameId, playerId, image, round);
+    await playerService.playerReady(gameId, save, round);
   }
 
   useEffect(() => {
