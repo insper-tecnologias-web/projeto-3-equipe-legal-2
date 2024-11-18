@@ -5,6 +5,7 @@ import useGameTimer from '@/hooks/useGameTimer';
 import { comicService } from '@/services/comic';
 import { useEffect, useState } from 'react';
 import { ChromePicker } from 'react-color';
+import { playerService } from '@/services/player';
 
 type Draw = {
   ctx: CanvasRenderingContext2D;
@@ -79,6 +80,8 @@ export function Canvas({
     setSave((prev) => !prev);
     const image = canvas.toDataURL();
     await comicService.addDrawing(gameId, image, round);
+
+    playerService.playerReady(gameId, save, round);
   }
 
   useEffect(() => {
