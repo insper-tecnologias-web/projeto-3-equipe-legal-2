@@ -37,7 +37,7 @@ export default async function Results({ params }: GamePageProps) {
   );
 
   return (
-    <div className="flex flex-col gap-10 mt-16">
+    <div className="flex flex-col gap-10 my-16">
       {comicsList.map((comic) =>
         Object.entries(comic).map(([playerId, val]) => (
           <div
@@ -49,7 +49,7 @@ export default async function Results({ params }: GamePageProps) {
               <h1 className="text-4xl">{val.title}</h1>
             </div>
 
-            <div className="flex gap-4">
+            <div className="flex gap-4 flex-wrap justify-center max-w-screen-xl">
               {val.drawings.map((drawing, drawingIndex) => (
                 <Image
                   key={`${playerId}-${drawingIndex}`}
