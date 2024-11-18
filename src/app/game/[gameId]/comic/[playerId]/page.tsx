@@ -3,6 +3,7 @@ import ComicForm from '@/components/comicForm';
 import { TimerProvider } from '@/contexts/TimerContext';
 import { comicService } from '@/services/comic';
 import { gameService } from '@/services/game';
+import { playerService } from '@/services/player';
 import { redirect } from 'next/navigation';
 import Comic from './comic';
 
@@ -33,8 +34,9 @@ export default async function ComicPage({
     nextPlayer = queue[realRound][pos];
   }
 
+  const { player } = await playerService.getPlayerById(gameId, playerId);
   const comic = await comicService.getComic(gameId, playerId);
-
+  console.log(player);
   if (realRound != round) {
     redirect(`/game/${gameId}/comic/${playerId}?round=${realRound}`);
   }
@@ -42,8 +44,19 @@ export default async function ComicPage({
   const activeComics = [false, false, false, false];
   if (realRound > 0 && realRound <= 4) activeComics[realRound - 1] = true;
 
+  console.log({
+    player: playerId,
+    playerPos: pos,
+    nextPlayer: nextPlayer,
+  });
+
   return (
-    <TimerProvider gameId={gameId} playerId={nextPlayer} round={realRound}>
+    <TimerProvider
+      gameId={gameId}
+      playerId={nextPlayer}
+      isHost={player.isHost}
+      round={realRound}
+    >
       <div className="flex flex-col mt-16 items-center w-full relative">
         {round === '0' ? (
           <ComicForm gameId={gameId} />

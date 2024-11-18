@@ -6,10 +6,10 @@ import { v4 as uuid } from 'uuid';
 
 const getPlayerById = async (
   gameId: string,
+  playerId: string,
 ): Promise<{ player: PlayerProps }> => {
   try {
-    const playerToken = Cookies.get('player_token');
-    const playerRef = ref(database, `games/${gameId}/players/${playerToken}`);
+    const playerRef = ref(database, `games/${gameId}/players/${playerId}`);
     const snapShot = get(playerRef);
     const player = (await snapShot).val();
 

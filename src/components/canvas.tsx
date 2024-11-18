@@ -89,7 +89,7 @@ export function Canvas({
       const image = canvas.toDataURL();
       comicService.addDrawing(gameId, playerId, image, round);
     }
-  }, [timeLeft, canvasRef, gameId, round]);
+  }, [timeLeft, canvasRef, gameId, round, playerId]);
 
   return (
     <div className="flex flex-col gap-5">
