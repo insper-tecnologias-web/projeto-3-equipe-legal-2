@@ -16,34 +16,20 @@ export default function Home() {
           <h1 className="text-2xl font-semibold">Crie o seu jogo</h1>
           <div className="w-[450px] h-[450px] border-4 border-zinc-900 relative">
             <Image
-              src={'/rick.svg'}
-              alt="Rick"
+              src={'/balao.svg'}
+              alt="Balão de fala"
               width={400}
               height={300}
               className="absolute -z-10 bottom-[72px] left-8"
               unoptimized
             />
             <Image
-              src={'/rick3.gif'}
+              src={'/palito_falando.gif'}
               alt="Rick"
               width={70}
               height={150}
               className="absolute -z-10 -bottom-1"
               unoptimized
-            />
-            <Image
-              src={'/rick.svg'}
-              alt="Rick"
-              width={400}
-              height={300}
-              className="absolute -z-10 bottom-[72px] left-8"
-            />
-            <Image
-              src={'/rick3.gif'}
-              alt="Rick"
-              width={70}
-              height={150}
-              className="absolute -z-10 -bottom-1"
             />
             <Form />
           </div>
@@ -52,19 +38,12 @@ export default function Home() {
           <h1 className="text-2xl font-semibold">Como jogar</h1>
           <div className="flex flex-wrap w-[450px] gap-[10px] text-center text-xl relative">
             <Image
-              src={'/rick2.gif'}
+              src={'/palito_sentado.gif'}
               alt="Rick"
               width={43}
               height={100}
               className="absolute -z-10 -top-[67px] right-4"
               unoptimized
-            />
-            <Image
-              src={'/rick2.gif'}
-              alt="Rick"
-              width={43}
-              height={100}
-              className="absolute -z-10 -top-[67px] right-4"
             />
             <div className="w-[220px] h-[220px] border-4 border-zinc-900 flex items-center justify-center p-4">
               Crie uma sala e compartilhe com seus amigos o link que será gerado
