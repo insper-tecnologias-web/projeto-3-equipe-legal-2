@@ -61,7 +61,7 @@ export default function Comic({
           />
         ) : (
           <Image
-            src="/comic1.svg"
+            src="/comic.svg"
             alt={`Placeholder Comic Round ${round}`}
             width={625}
             height={350}

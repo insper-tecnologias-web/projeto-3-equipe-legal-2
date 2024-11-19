@@ -35,7 +35,7 @@ export function Player({ gameId }: { gameId: string }) {
                   className="absolute -top-8"
                   width={40}
                   height={40}
-                  alt={'Curoa'}
+                  alt={'Coroa'}
                 />
               )}
               <div className="w-60 h-60 flex items-center justify-center border-4 border-zinc-900">
