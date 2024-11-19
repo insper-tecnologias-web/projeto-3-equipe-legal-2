@@ -4,6 +4,10 @@ Tirinhas é um jogo estilo Gartic Phone para fazer tirinhas engraçadas com os s
 
 ![alt text](.github/home.gif)
 
+Demo do jogo na visão do host: [Clique aqui](https://www.youtube.com/watch?v=CN3a6A8nKws)
+
+Demo do jogo na visão de convidado: [Clique aqui](https://www.youtube.com/watch?v=uv0kzKnoPLk)
+
 ## Fluxo de telas
 
 O fluxo de telas do website foi feito no Figma e pode ser acessado clicando [aqui](https://www.figma.com/design/fEHA4NxIKo6PDqJfXrKM2r/Tirinhas?node-id=0-1&t=aF8ZUHzRiiPqiVbu-1)
