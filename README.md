@@ -32,21 +32,21 @@ gh repo clone insper-tecnologias-web/projeto-3-equipe-legal-2
 
 Acesse o diretório do projeto:
 
-  ```bash
-  cd projeto-3-equipe-legal-2
-  ```
+```bash
+cd projeto-3-equipe-legal-2
+```
 
 Instale as dependências:
 
-  ```bash
-  npm install
-  ```
+```bash
+npm install
+```
 
 Inicie o aplicativo:
 
-  ```bash
-  npm start
-  ```
+```bash
+npm start
+```
 
 O aplicativo estará disponível em `http://localhost:3000`.
 
