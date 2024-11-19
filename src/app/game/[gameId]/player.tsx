@@ -59,7 +59,7 @@ export function Player({ gameId }: { gameId: string }) {
           {player.isHost && (
             <StartButton
               gameId={gameId}
-              disabled={Object.keys(players).length === 1}
+              disabled={Object.keys(players).length !== 4}
             />
           )}
           <InviteButton />

@@ -56,6 +56,7 @@ export default function Comic({
           <Image
             src={currentComic}
             alt={`Comic Round ${round}`}
+            className="border-4 border-zinc-900"
             width={625}
             height={350}
           />
