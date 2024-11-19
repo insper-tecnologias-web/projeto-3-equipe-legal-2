@@ -65,23 +65,29 @@ export function Player({ gameId }: { gameId: string }) {
           <InviteButton />
         </div>
       ) : (
-        <div className="mt-8 flex flex-col items-center gap-4">
-          <h1>Coloque o seu nome para jogar</h1>
-          <input
-            className="text-black max-w-48 p-1 rounded-lg border-2 border-zinc-900"
-            type="text"
-            name="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
-          <button
-            className="font-semibold text-xl hover:underline"
-            onClick={handleJoinGame}
-          >
-            Entrar
-          </button>
-        </div>
+        <>
+          {Object.keys(players).length < 4 ? (
+            <div className="mt-8 flex flex-col items-center gap-4">
+              <h1>Coloque o nome do seu personagem ou grupo</h1>
+              <input
+                className="text-black max-w-48 p-1 rounded-lg border-2 border-zinc-900"
+                type="text"
+                name="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+              <button
+                className="font-semibold text-xl hover:underline"
+                onClick={handleJoinGame}
+              >
+                Entrar
+              </button>
+            </div>
+          ) : (
+            <p className="mt-8 text-xl">A sala está cheia</p>
+          )}
+        </>
       )}
     </>
   );

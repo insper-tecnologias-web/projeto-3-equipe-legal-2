@@ -26,7 +26,7 @@ export function Form() {
       onSubmit={handleCreateGame}
     >
       <label className="font-semibold text-center text-wrap text-3xl w-4/5 mb-4">
-        Escreva um nickname e crie a sua sala
+        Escreva o nome do seu personagem ou grupo e crie a sala
       </label>
       <input
         className="text-black mb-3 w-3/5 p-1 rounded-lg border-2 border-zinc-900"

@@ -52,12 +52,12 @@ export default function Home() {
               Quando estiver pronto, é só começar o jogo
             </div>
             <div className="w-[220px] h-[220px] border-4 border-zinc-900 flex items-center justify-center p-4">
-              Na primeira rodada, escolha o nome da sua tirinha e comece o
-              desenho do primeiro quadrinho
+              Na primeira rodada, escolha o nome da sua tirinha e depois comece
+              o desenho do primeiro quadrinho
             </div>
             <div className="w-[220px] h-[220px] border-4 border-zinc-900 flex items-center justify-center p-4">
-              Na rodada seguinte, outra pessoa vai colocar os balões de fala no
-              seu quadrinho e assim por diante :D
+              Na rodada seguinte, outra pessoa vai continuar a sua tirinha e
+              você vai continuar a tirinha de alguém
             </div>
           </div>
         </div>

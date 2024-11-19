@@ -6,9 +6,10 @@ import { useState } from 'react';
 
 type ComicFormProps = {
   gameId: string;
+  playerName: string;
 };
 
-export default function ComicForm({ gameId }: ComicFormProps) {
+export default function ComicForm({ gameId, playerName }: ComicFormProps) {
   const [isReady, setIsReady] = useState(false);
 
   const toggleSave = () => {
@@ -31,11 +32,12 @@ export default function ComicForm({ gameId }: ComicFormProps) {
 
   return (
     <form
-      className="flex text-4xl max-w-screen-xl w-full text-center items-center"
+      className="flex text-4xl max-w-screen-lg w-full text-center items-center"
       onSubmit={handleSubmit}
     >
+      <p className="text-xl">{playerName} em:</p>
       <input
-        className="w-full text-center h-full outline-none"
+        className="flex-1 text-center h-full outline-none"
         type="text"
         name="comicText"
         id="comicText"

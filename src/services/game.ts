@@ -46,7 +46,7 @@ const startGame = async (gameId: string) => {
   const playersRef = ref(database, `games/${gameId}/players`);
   const players = (await get(playersRef)).val() as Record<string, string>;
   const playerIds = Object.keys(players);
-  const endTime = Date.now() + 62 * 1000;
+  const endTime = Date.now() + 62 * 2 * 1000;
 
   const n = playerIds.length;
   const square: string[][] = [];
@@ -71,7 +71,7 @@ const finishGame = async (gameId: string) => {
 };
 
 const nextRound = async (gameId: string, round: number) => {
-  const endTime = Date.now() + 62 * 1000;
+  const endTime = Date.now() + 62 * 2 * 1000;
   const gameRef = ref(database, `games/${gameId}`);
 
   await update(gameRef, { round, endTime, status: 'PLAYING' });

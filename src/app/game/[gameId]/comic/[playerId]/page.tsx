@@ -48,9 +48,11 @@ export default async function ComicPage({
     >
       <div className="flex flex-col mt-16 items-center w-full relative">
         {round === '0' ? (
-          <ComicForm gameId={gameId} />
+          <ComicForm gameId={gameId} playerName={player.name} />
         ) : (
-          <h1 className="text-4xl">{comic.title}</h1>
+          <h1 className="text-4xl">
+            {player.name} em: {comic.title}
+          </h1>
         )}
         <Clock round={realRound} />
 
