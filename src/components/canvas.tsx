@@ -4,6 +4,7 @@ import { useTimer } from '@/contexts/TimerContext';
 import { useDraw } from '@/hooks/useDraw';
 import { comicService } from '@/services/comic';
 import { playerService } from '@/services/player';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { ChromePicker } from 'react-color';
 
@@ -107,13 +108,18 @@ export function Canvas({
               className={`border-2  p-2 text-xl ${isDrawing ? 'border-red-600' : 'border-zinc-900'}`}
               onClick={setDraw}
             >
-              ✏️
+              <Image src="/lapis.png" alt="Lápis" width={20} height={20} />
             </button>
             <button
               className={`border-2  p-2 text-xl ${!isDrawing ? 'border-red-600' : 'border-zinc-900'}`}
               onClick={setErase}
             >
-              👻
+              <Image
+                src="/borracha.png"
+                alt="Borracha"
+                width={20}
+                height={20}
+              />
             </button>
           </div>
           <div className="flex gap-3 w-full">
